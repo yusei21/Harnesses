@@ -1,52 +1,56 @@
-# Harnesses — multiagentes locais e multiprovedor
+# Harnesses — Rust-first, Python model adapters
 
-Harness de referência em Python 3.11+. Possui **integração HTTP real** com OpenAI, Anthropic, Gemini e Ollama local; orquestração **sequencial, texto apenas**, com modelos diferentes para cada agente. Não executa código, não modifica arquivos, não oferece ferramentas MCP/A2A e não contém memória persistente.
+Harness de engenharia multiagente **local-first**. O núcleo de orquestração está em **Rust**; Python é somente um adaptador de inferência para OpenAI, Anthropic, Gemini e Ollama e permanece disponível para avaliações experimentais.
 
-## Início rápido
+## Primeiro teste (sem chaves)
 ```bash
 python scripts/validate_catalog.py
 python -m unittest discover -s tests -v
-python -m harness.cli eval
-python -m harness.cli catalog
+cargo test --manifest-path rust/Cargo.toml --all-targets
 ```
 
-## Usar no seu computador com Ollama
+## Executar núcleo Rust + modelo Ollama local
+Requisitos: Rust stable, Python 3.11+, Ollama iniciado e modelo já instalado.
+
 ```bash
 ollama pull qwen3
-python -m harness.cli run --provider ollama --model qwen3 --task "Proponha melhorias no sistema"
+cargo run --manifest-path rust/Cargo.toml -- run \
+  --provider ollama --model qwen3 \
+  --task "Avalie minha arquitetura"
 ```
 
-## Usar nuvem (exemplo OpenAI)
+## Orquestração paralela controlada
+```bash
+cargo run --manifest-path rust/Cargo.toml -- run \
+  --provider ollama --model qwen3 \
+  --stages 'planner|researcher,engineer|reviewer' \
+  --max-parallel 2 --max-calls 4 --task "Analise a migração"
+```
+
+## Provedores distintos por agente
 ```bash
 export OPENAI_API_KEY="..."
-python -m harness.cli run --provider openai --model SEU_MODELO --allow-cloud --task "Revisar arquitetura"
+cargo run --manifest-path rust/Cargo.toml -- run \
+  --provider ollama --model qwen3 \
+  --stages 'planner|engineer|reviewer' \
+  --agent-model reviewer=openai:SEU_MODELO \
+  --allow-cloud --task "Revise uma proposta"
 ```
+`--allow-cloud` consente em transmitir objetivo e respostas anteriores para o provedor escolhido. O modelo na nuvem é cobrado conforme sua conta. Não há quota financeira automática.
 
-## Documentação detalhada
-- [Como configurar e usar provedores, inclusive multi-provedor](docs/PROVIDERS.md)
-- [Arquitetura](docs/ARCHITECTURE.md)
-- [Catálogo de agentes](docs/AGENTS.md) — cada um também em `docs/agents/<nome>.md`
-- [Catálogo de Skills](docs/SKILLS.md) — cada uma também em `docs/skills/<nome>.md`
-- [Orquestração](docs/ORCHESTRATION.md)
-- [Hooks, aprovações e segurança](docs/SECURITY.md)
-- [Memória e autoevolução — plano](docs/EVOLUTION.md)
-- [Operação](docs/OPERATIONS.md)
-- [Estado real e limitações](docs/STATUS.md)
-- [Fontes pesquisadas](docs/RESEARCH.md)
+## Guias
+- [Rust: operação, contratos e CLI](docs/RUST_CORE.md)
+- [Arquitetura e componentes](docs/ARCHITECTURE.md)
+- [Agentes](docs/AGENTS.md) e [manuais individuais](docs/agents/)
+- [Skills](docs/SKILLS.md) e [manuais individuais](docs/skills/)
+- [Provedores](docs/PROVIDERS.md)
+- [Segurança](docs/SECURITY.md)
+- [Estado real do sistema](docs/STATUS.md)
+- [Próximas fases](docs/EVOLUTION.md)
+- [Decisões arquiteturais](docs/DECISIONS.md)
+- [Fontes](docs/RESEARCH.md)
 
-## Estrutura
-```text
-harness/providers.py   Conectores HTTP com destinos fixos
-harness/live.py        Agentes LLM em sequência
-harness/core.py        Runtime offline e políticas demonstrativas
-harness/cli.py         CLI catalog/demo/eval/run
-agents/                7 contratos de agentes
-skills/                9 Skills Agent Skills
-docs/agents/           Documentação individual
-docs/skills/           Documentação individual
-tests/                 Testes mockados e offline
-```
-
-Segurança: `--allow-cloud` obrigatório para transmissão externa; APIs de nuvem só via HTTPS fixo; Ollama só em loopback; sem retries automáticos; no máximo 5 chamadas por execução. **Sem orçamento financeiro efetivo**, não use dados sensíveis sem autorização. Modelos retornam somente texto; não podem alterar o computador.
+## Limitações importantes
+O núcleo Rust agenda invocações de modelo em estágios, admite paralelismo de até 3 agentes, valida rotas e orçamentos de chamadas, e falha fechado em ações de risco. Não há execução de shell, acesso a arquivos por agentes, MCP/A2A, aprovação autenticada, memória persistente ou autoevolução. A ponte Python usa subprocesso de **código confiável do repositório**, mas não é um sandbox de segurança. O CLI Python anterior continua disponível para compatibilidade, não é o núcleo recomendado.
 
 Licença MIT.
