@@ -1,0 +1,42 @@
+{
+  "skill": "rag-pipeline-evaluation",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "rag-pipeline-evaluation-1",
+      "task": "Retrieval certo geracao errada",
+      "expected": [
+        "faithfulness",
+        "citacao",
+        "abstencao"
+      ],
+      "negative": [
+        "tratar recall alto como qualidade de resposta"
+      ]
+    },
+    {
+      "id": "rag-pipeline-evaluation-2",
+      "task": "Documento de outro tenant",
+      "expected": [
+        "filtro tenant",
+        "ACL",
+        "teste negativo"
+      ],
+      "negative": [
+        "confiar no prompt para isolar tenants"
+      ]
+    },
+    {
+      "id": "rag-pipeline-evaluation-3",
+      "task": "Pergunta sem resposta",
+      "expected": [
+        "abstencao",
+        "sem evidencia",
+        "fallback"
+      ],
+      "negative": [
+        "inventar citações"
+      ]
+    }
+  ]
+}

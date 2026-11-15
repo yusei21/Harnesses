@@ -1,0 +1,44 @@
+{
+  "skill": "frontend-interface-review",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "frontend-interface-review-1",
+      "task": "Formulário login",
+      "expected": [
+        "labels",
+        "erro",
+        "foco",
+        "teclado"
+      ],
+      "negative": [
+        "validar apenas aparencia"
+      ]
+    },
+    {
+      "id": "frontend-interface-review-2",
+      "task": "Dashboard SaaS",
+      "expected": [
+        "loading",
+        "empty",
+        "permissao",
+        "responsivo"
+      ],
+      "negative": [
+        "mostrar dados de tenant errado"
+      ]
+    },
+    {
+      "id": "frontend-interface-review-3",
+      "task": "App SSR",
+      "expected": [
+        "hidratacao",
+        "bundle",
+        "performance"
+      ],
+      "negative": [
+        "presumir que Lighthouse foi executado"
+      ]
+    }
+  ]
+}

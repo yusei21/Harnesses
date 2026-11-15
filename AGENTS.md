@@ -19,6 +19,10 @@ python -m harness.cli eval
 ```
 - Recomendado antes de merge: executar também `cargo fmt --manifest-path rust/Cargo.toml -- --check` e `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; essas verificações ainda não são gates obrigatórios do CI nesta fase.
 
-## Desenvolvimento de Skills (pilotos)
+## Especialização de IA/ML e SaaS
 
-Ao modificar `multi-agent-routing`, `code-change` ou `rust-quality-gate`, atualizar referências, rubricas e cenários ao lado do SKILL.md. Validar com `python scripts/validate_skill_quality.py`, `python -m unittest discover -s tests -v` e `cargo test --manifest-path rust/Cargo.toml --all-targets`. Não confundir testes estruturais com avaliação de resultado de modelos. Consulte `docs/SKILL_ENGINEERING.md`.
+As 9 Skills de domínio em `docs/ML_SAAS_STRATEGY.md` não são ativadas automaticamente. Não copiar código/arquivos do ECC sem revisão de licença e segurança. Priorizar datasets de pesquisa com proveniência, avaliação sem vazamento, isolamento de tenants e tests adversariais. Para alterações nessas Skills, rodar `python scripts/validate_domain_skills.py`.
+
+## Skills avançadas e avaliações
+
+Para `multi-agent-routing`, `code-change` e `rust-quality-gate`, atualize referências e casos junto ao SKILL.md. Verifique `python scripts/validate_skill_quality.py` e `cargo test --manifest-path rust/Cargo.toml --all-targets`; testes estruturais não comprovam melhoria semântica em LLMs. Veja `docs/SKILL_ENGINEERING.md`.

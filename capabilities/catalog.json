@@ -157,6 +157,141 @@
       ],
       "path": "skills/insights-triage/SKILL.md",
       "docs": "docs/skills/insights-triage.md"
+    },
+    {
+      "id": "ml-experiment-design",
+      "domain": "machine-learning",
+      "kind": "skill",
+      "triggers": [
+        "ml",
+        "machine learning",
+        "experimento",
+        "hipotese",
+        "ablation",
+        "baseline"
+      ],
+      "path": "skills/ml-experiment-design/SKILL.md",
+      "docs": "docs/skills/ml-experiment-design.md"
+    },
+    {
+      "id": "dataset-leakage-audit",
+      "domain": "machine-learning",
+      "kind": "skill",
+      "triggers": [
+        "dataset",
+        "leakage",
+        "vazamento",
+        "split",
+        "dados",
+        "drift"
+      ],
+      "path": "skills/dataset-leakage-audit/SKILL.md",
+      "docs": "docs/skills/dataset-leakage-audit.md"
+    },
+    {
+      "id": "pytorch-training-review",
+      "domain": "machine-learning",
+      "kind": "skill",
+      "triggers": [
+        "pytorch",
+        "torch",
+        "cuda",
+        "gpu",
+        "treinamento",
+        "backprop"
+      ],
+      "path": "skills/pytorch-training-review/SKILL.md",
+      "docs": "docs/skills/pytorch-training-review.md"
+    },
+    {
+      "id": "rag-pipeline-evaluation",
+      "domain": "rag",
+      "kind": "skill",
+      "triggers": [
+        "rag",
+        "retrieval",
+        "embedding",
+        "chunk",
+        "grounding",
+        "busca vetorial"
+      ],
+      "path": "skills/rag-pipeline-evaluation/SKILL.md",
+      "docs": "docs/skills/rag-pipeline-evaluation.md"
+    },
+    {
+      "id": "llm-evaluation-lab",
+      "domain": "ai",
+      "kind": "skill",
+      "triggers": [
+        "llm",
+        "evals",
+        "agente",
+        "benchmark",
+        "prompt",
+        "regressao"
+      ],
+      "path": "skills/llm-evaluation-lab/SKILL.md",
+      "docs": "docs/skills/llm-evaluation-lab.md"
+    },
+    {
+      "id": "saas-system-design",
+      "domain": "saas",
+      "kind": "skill",
+      "triggers": [
+        "saas",
+        "multi tenant",
+        "subscription",
+        "billing",
+        "produto",
+        "mvp"
+      ],
+      "path": "skills/saas-system-design/SKILL.md",
+      "docs": "docs/skills/saas-system-design.md"
+    },
+    {
+      "id": "frontend-interface-review",
+      "domain": "frontend",
+      "kind": "skill",
+      "triggers": [
+        "frontend",
+        "react",
+        "nextjs",
+        "ui",
+        "a11y",
+        "acessibilidade"
+      ],
+      "path": "skills/frontend-interface-review/SKILL.md",
+      "docs": "docs/skills/frontend-interface-review.md"
+    },
+    {
+      "id": "backend-api-contracts",
+      "domain": "backend",
+      "kind": "skill",
+      "triggers": [
+        "backend",
+        "fastapi",
+        "api",
+        "rest",
+        "postgres",
+        "endpoint"
+      ],
+      "path": "skills/backend-api-contracts/SKILL.md",
+      "docs": "docs/skills/backend-api-contracts.md"
+    },
+    {
+      "id": "saas-security-threat-model",
+      "domain": "security",
+      "kind": "skill",
+      "triggers": [
+        "security",
+        "owasp",
+        "auth",
+        "tenant",
+        "segredos",
+        "privacidade"
+      ],
+      "path": "skills/saas-security-threat-model/SKILL.md",
+      "docs": "docs/skills/saas-security-threat-model.md"
     }
   ]
 }

@@ -30,10 +30,26 @@ Ao adicionar uma nova Skill, crie seu SKILL.md, documentação em `docs/skills/`
 
 Veja [CAPABILITIES.md](CAPABILITIES.md) e [ECC_ADOPTION.md](ECC_ADOPTION.md).
 
-## Pilotos de nível avançado
+## Departamentos IA/ML e SaaS — especialização por demanda
 
-- [Multi-agent routing](skills/multi-agent-routing.md): matriz de decisão, contrato Rust e cenários válidos/negativos.
-- [Code change](skills/code-change.md): protocolo de mudança mínima, evidências de testes, rollback e rubricas.
-- [Rust quality gate](skills/rust-quality-gate.md): checks Cargo, revisão de riscos Tokio/subprocesso e rubricas.
+| Departamento | Skills e objetivo |
+|---|---|
+| Machine Learning | `ml-experiment-design` (hipóteses, ablações); `dataset-leakage-audit` (splits, leakage); `pytorch-training-review` (treino e GPU) |
+| RAG | `rag-pipeline-evaluation` (retrieval, groundedness, citações e ACL) |
+| IA / agentes | `llm-evaluation-lab` (benchmarks, holdout, custo e segurança) |
+| SaaS | `saas-system-design` (produto, tenancy, billing e operação) |
+| Frontend | `frontend-interface-review` (acessibilidade, responsividade e estados) |
+| Backend | `backend-api-contracts` (APIs, migrações, idempotência) |
+| Segurança | `saas-security-threat-model` (auth, tenant isolation, privacidade e prompt injection) |
 
-Os arquivos das três Skills têm `references/` e `evals/`. Para padrões, maturidade e limitações dos testes, veja [SKILL_ENGINEERING.md](SKILL_ENGINEERING.md).
+Cada Skill possui `SKILL.md`, manual próprio em `docs/skills/`, referência em `references/` e três rubricas em `evals/`. Os cenários são **critérios de avaliação, não medições de modelos reais**. O catálogo Rust sugere por metadados e não carrega o texto automaticamente no contexto.
+
+Verifique com `python scripts/validate_domain_skills.py`, `cargo test --manifest-path rust/Cargo.toml --all-targets` e `cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit`.
+
+## Três Skills aprofundadas
+
+- [multi-agent-routing](skills/multi-agent-routing.md): matriz de decisão, contrato Rust e testes de aceitação.
+- [code-change](skills/code-change.md): impacto, rollback e rubricas de implementação.
+- [rust-quality-gate](skills/rust-quality-gate.md): comandos Cargo e análise de riscos de Tokio e subprocessos.
+
+O padrão está descrito em [SKILL_ENGINEERING.md](SKILL_ENGINEERING.md). Os cenários garantem integridade e contratos, não medem qualidade de LLMs em produção.
