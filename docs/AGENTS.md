@@ -1,22 +1,33 @@
 # Catálogo de agentes
 
-Agentes são **papéis contratuais**, não processos em execução neste protótipo. O roteador offline em harness/core.py escolhe uma sequência demonstrativa. Runtime LLM, paralelismo e agentes remotos ainda precisam de adapters.
+Sete agentes declarativos, com descrição em `agents/<nome>.json` e documentação individual. A execução **real em texto** usa `harness/live.py`, com uma chamada de modelo para cada papel escolhido, em ordem.
 
-| Agente | O que faz | Ativação | Documentação |
-|---|---|---|---|
-| `planner` | Recebe objetivo e restrições; devolve plano, critérios de aceite, dependências e tarefas candidatas. | Inicie por ele somente em tarefas complexas. O orquestrador pode dispensá-lo em atividades simples. | [Guia](agents/planner.md) |
-| `researcher` | Recebe perguntas e fontes autorizadas; devolve evidências citadas e incertezas. | Use quando decisões dependem de documentação, repositórios e pesquisa externa. | [Guia](agents/researcher.md) |
-| `engineer` | Recebe requisitos e contexto de código; devolve proposta de patch e testes. | Use para implementação/refatoração; em produção conecte sandbox controlado. | [Guia](agents/engineer.md) |
-| `reviewer` | Recebe diff, requisitos e testes; devolve achados priorizados por severidade. | Use após mudanças técnicas, idealmente sem compartilhar o contexto inteiro do executor. | [Guia](agents/reviewer.md) |
-| `evaluator` | Recebe baseline, candidato, casos de avaliação e rubrica; devolve métricas e regressões. | Use antes de promover mudanças de prompts, Skills e workflows. | [Guia](agents/evaluator.md) |
-| `memory-curator` | Recebe traces sanitizados e evidências; propõe memórias com fontes e validade. | Use em consolidação periódica ou após incidentes resolvidos. | [Guia](agents/memory-curator.md) |
-| `optimizer` | Recebe falhas agregadas e baseline; propõe alteração versionada com experimento. | Use quando há evidência repetível de problema de qualidade, custo ou latência. | [Guia](agents/optimizer.md) |
+| Agente | Responsabilidade | Manual |
+|---|---|---|
+| `planner` | Decompõe o objetivo, define estratégia e critérios de aceite. | [Guia](agents/planner.md) |
+| `researcher` | Interpreta contexto e evidências que o usuário fornecer. | [Guia](agents/researcher.md) |
+| `engineer` | Elabora propostas técnicas e estratégias de implementação. | [Guia](agents/engineer.md) |
+| `reviewer` | Revisa criticamente textos das etapas anteriores, identifica riscos e lacunas. | [Guia](agents/reviewer.md) |
+| `evaluator` | Propõe métricas, casos de avaliação e critérios de regressão. | [Guia](agents/evaluator.md) |
+| `memory-curator` | Propõe memórias candidatas para posterior validação. | [Guia](agents/memory-curator.md) |
+| `optimizer` | Propõe hipóteses de melhoria e experimentos comparativos. | [Guia](agents/optimizer.md) |
 
-## Contrato
-Cada `agents/<nome>.json` declara nome, entradas, saídas, triggers, ferramentas pretendidas, risco e documentação. Contexto mínimo, evidências e limites são obrigatórios. O agente de revisão deve ter contexto independente do engenheiro.
+## Como executar
+Use Ollama local (modelo deve estar instalado):
+```bash
+python -m harness.cli run --provider ollama --model qwen3 --agents planner,engineer,reviewer --task "Proponha uma arquitetura"
+```
 
-## Roteamento
-O processo preferido é agente único -> agente como ferramenta -> delegação especializada -> paralelismo limitado. Não implementar agentes conversando indefinidamente. Cada delegado recebe objetivo, budget, limite de passos, ferramentas permitidas e esquema de saída.
+O padrão é `planner,engineer,reviewer`. É possível trocar a sequência por nomes do catálogo e usar provedores diferentes:
 
-## Experimente
-`python -m harness.cli catalog` lista agentes; `python -m harness.cli demo --task "Investigar bug na API"` simula fluxo sem LLM. Para executar agentes reais, implemente adapters conforme docs/INTEGRATIONS.md.
+```bash
+python -m harness.cli run --provider ollama --model qwen3 \
+  --agents planner,researcher,reviewer --max-calls 3 \
+  --agent-model reviewer=anthropic:SEU_MODELO --allow-cloud \
+  --task "Analise um design"
+```
+
+O runtime não lê automaticamente o JSON do agente ao gerar prompts; o papel é definido em `harness/live.py`. Os contratos JSON são recursos declarativos para futura integração.
+
+## O que não faz
+A execução dos agentes não inclui filesystem, execução de testes, acesso web, MCP, A2A, persistência, paralelismo ou autoevolução. Os nomes `engineer` e `reviewer` não indicam que tenham executado código ou revisado arquivos reais. Para detalhes técnicos leia [PROVIDERS.md](PROVIDERS.md) e [STATUS.md](STATUS.md).

@@ -1,32 +1,24 @@
-# Integrações: Models, MCP e A2A
+# Integrações
 
-O arquivo `harness/adapters.py` declara protocolos, não implementações de rede.
+## Provedores de modelos — implementado
+`harness/providers.py` implementa chamadas HTTP reais para OpenAI Responses, Anthropic Messages, Gemini generateContent e Ollama local. `harness/live.py` implementa orquestração sequencial, apenas texto, com override por agente.
 
-## ModelAdapter
-Entrada: instrução versionada, contexto minimizado, JSON schema de saída. Saída: JSON validado. Implementação real: provedores selecionáveis, timeouts, retries, contagem de tokens, prompt injection isolation e tracing.
+Veja [PROVIDERS.md](PROVIDERS.md) e [STATUS.md](STATUS.md). Não confundir essa conexão com function calling ou execução de ferramentas.
 
-## ToolAdapter / MCP
-MCP fornece tools/resources/prompts. Antes de habilitar:
-- Allowlist de servidores e ferramentas; scopes por usuário e tarefa.
-- Não confiar em descrições/respostas de tools como instruções.
-- OAuth/tokens destinados ao servidor correto, TLS, timeout, limite de saída e logs sanitizados.
-- Toda ação de escrita ou destrutiva necessita gate de permissão verificável.
-- Não passar tokens de terceiros ao servidor errado.
-- Não ativar conectores automaticamente ao descobrir capacidades.
+## ModelAdapter genérico — interface de extensão
+`harness/adapters.py` contém protocolos opcionais que não são a implementação atual dos provedores. Uma futura camada comum deverá normalizar structured output, cancelamento, uso de tokens, custo e tool calling.
 
-## A2A
-A2A é comunicação entre agentes/serviços, diferente de MCP. Implementar adapter separado com Agent Card verificado, identidade, transporte autenticado, tarefas com IDs, polling/callbacks seguros, cancelamento e timeouts. Respostas remotas são dados não confiáveis.
+## ToolAdapter / MCP — não implementado
+MCP permite conectar tools, resources e prompts. A integração futura deverá exigir allowlist de servidores/ferramentas, autenticação por usuário, isolamento de credenciais, validação de schemas, orçamento, timeout e aprovação de side effects.
 
-## Sandbox
-Runner de código deve usar contêiner isolado, rede desabilitada por padrão, credenciais fora da sandbox, limites CPU/memória/disk/time e filesystem mínimo. Jamais execute código vindo de Skills de terceiros sem revisão.
+## A2A — não implementado
+A2A permite comunicação com agentes externos. Exigir Agent Cards verificados, transporte autenticado, IDs de tarefas, lifecycle, cancelamento, segurança de conteúdo e não confiar cegamente em respostas remotas. A2A não é necessário para invocar vários modelos sequencialmente.
 
-## CheckpointStore
-Persistir estado de trabalho de forma transacional; idempotência em side effects, replay sem repetição, criptografia e retenção. Para longa duração, avaliar Temporal, LangGraph ou runtime durável.
+## Sandbox e ferramentas — não implementado
+Antes de oferecer shell ou escrita: contenção real (contêiner/VM), rede desabilitada por padrão, limites de recursos, autorização específica por tarefa, observabilidade e rollback. Não há fallback para execução no host.
 
-## Ordem de implementação
-1. Modelo real com JSON schema e tracing.
-2. Sandbox de leitura e execução de testes.
-3. Checkpoints e approvals.
-4. MCP read-only.
-5. Delegação paralela com isolamento.
-6. A2A remoto sob necessidade comprovada.
+## Checkpoint e memória — não implementados
+Persistência transacional, proteção de dados sensíveis, replay idempotente e provenance. Considerar LangGraph/Temporal conforme necessidade. Ver [EVOLUTION.md](EVOLUTION.md).
+
+## Segurança de integração
+Não permita que uma resposta de LLM, MCP ou A2A se transforme em comando privilegiado. Esquemas de saída e guardrails de prompt não substituem autorização implementada em código.
