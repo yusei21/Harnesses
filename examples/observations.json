@@ -1,0 +1,22 @@
+[
+  {
+    "kind": "test_failure",
+    "component": "cargo-test"
+  },
+  {
+    "kind": "test_failure",
+    "component": "cargo-test"
+  },
+  {
+    "kind": "repeated_workflow",
+    "component": "rust-review"
+  },
+  {
+    "kind": "repeated_workflow",
+    "component": "rust-review"
+  },
+  {
+    "kind": "tool_denied",
+    "component": "github"
+  }
+]

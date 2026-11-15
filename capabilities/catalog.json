@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "description": "Catálogo canônico por domínio; índice de metadados, não ativação automática.",
+  "capabilities": [
+    {
+      "id": "task-decomposition",
+      "domain": "planning",
+      "kind": "skill",
+      "triggers": [
+        "planejar",
+        "etapas",
+        "plan",
+        "tarefa"
+      ],
+      "path": "skills/task-decomposition/SKILL.md",
+      "docs": "docs/skills/task-decomposition.md"
+    },
+    {
+      "id": "evidence-research",
+      "domain": "research",
+      "kind": "skill",
+      "triggers": [
+        "pesquisa",
+        "fontes",
+        "evidencias",
+        "research"
+      ],
+      "path": "skills/evidence-research/SKILL.md",
+      "docs": "docs/skills/evidence-research.md"
+    },
+    {
+      "id": "code-change",
+      "domain": "engineering",
+      "kind": "skill",
+      "triggers": [
+        "codigo",
+        "patch",
+        "corrigir",
+        "refatoracao",
+        "edit"
+      ],
+      "path": "skills/code-change/SKILL.md",
+      "docs": "docs/skills/code-change.md"
+    },
+    {
+      "id": "security-review",
+      "domain": "security",
+      "kind": "skill",
+      "triggers": [
+        "seguranca",
+        "segredos",
+        "permissoes",
+        "security"
+      ],
+      "path": "skills/security-review/SKILL.md",
+      "docs": "docs/skills/security-review.md"
+    },
+    {
+      "id": "eval-design",
+      "domain": "quality",
+      "kind": "skill",
+      "triggers": [
+        "eval",
+        "testes",
+        "qualidade",
+        "benchmark"
+      ],
+      "path": "skills/eval-design/SKILL.md",
+      "docs": "docs/skills/eval-design.md"
+    },
+    {
+      "id": "memory-curation",
+      "domain": "intelligence",
+      "kind": "skill",
+      "triggers": [
+        "memoria",
+        "consolidar",
+        "memory"
+      ],
+      "path": "skills/memory-curation/SKILL.md",
+      "docs": "docs/skills/memory-curation.md"
+    },
+    {
+      "id": "workflow-optimization",
+      "domain": "intelligence",
+      "kind": "skill",
+      "triggers": [
+        "otimizar",
+        "workflow",
+        "custos",
+        "latencia"
+      ],
+      "path": "skills/workflow-optimization/SKILL.md",
+      "docs": "docs/skills/workflow-optimization.md"
+    },
+    {
+      "id": "mcp-integration",
+      "domain": "integrations",
+      "kind": "skill",
+      "triggers": [
+        "mcp",
+        "tools",
+        "servidor",
+        "conector"
+      ],
+      "path": "skills/mcp-integration/SKILL.md",
+      "docs": "docs/skills/mcp-integration.md"
+    },
+    {
+      "id": "multi-agent-routing",
+      "domain": "orchestration",
+      "kind": "skill",
+      "triggers": [
+        "agentes",
+        "delegacao",
+        "paralelo",
+        "routing"
+      ],
+      "path": "skills/multi-agent-routing/SKILL.md",
+      "docs": "docs/skills/multi-agent-routing.md"
+    },
+    {
+      "id": "consistency-audit",
+      "domain": "quality",
+      "kind": "skill",
+      "triggers": [
+        "contradicao",
+        "documentacao",
+        "consistencia",
+        "audit"
+      ],
+      "path": "skills/consistency-audit/SKILL.md",
+      "docs": "docs/skills/consistency-audit.md"
+    },
+    {
+      "id": "rust-quality-gate",
+      "domain": "engineering",
+      "kind": "skill",
+      "triggers": [
+        "rust",
+        "cargo",
+        "clippy",
+        "formatacao"
+      ],
+      "path": "skills/rust-quality-gate/SKILL.md",
+      "docs": "docs/skills/rust-quality-gate.md"
+    },
+    {
+      "id": "insights-triage",
+      "domain": "intelligence",
+      "kind": "skill",
+      "triggers": [
+        "insights",
+        "repeticao",
+        "falhas",
+        "melhoria"
+      ],
+      "path": "skills/insights-triage/SKILL.md",
+      "docs": "docs/skills/insights-triage.md"
+    }
+  ]
+}

@@ -21,3 +21,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo test --manifest-path rust/Cargo.toml --all-targets
+      - run: cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit
