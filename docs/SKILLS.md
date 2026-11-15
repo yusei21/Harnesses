@@ -1,25 +1,23 @@
 # Catálogo de Skills
 
-As Skills seguem pastas `skills/<nome>/SKILL.md` e possuem documentação `docs/skills/<nome>.md`. São procedimentos reutilizáveis; não são agentes nem ferramentas que concedem acesso à máquina.
+Skills são pastas portáveis no formato `SKILL.md`, com documentação individual. **Skills não são agentes, não concedem privilégios e não são ativadas automaticamente pelo núcleo Rust nesta versão.**
 
-| Skill | O que oferece | Manual |
+| Skill | Papel | Manual |
 |---|---|---|
-| `task-decomposition` | Planejamento e critérios de aceite | [Guia](skills/task-decomposition.md) |
-| `evidence-research` | Pesquisa e análise de evidências | [Guia](skills/evidence-research.md) |
-| `code-change` | Patches pequenos, testes e rollback | [Guia](skills/code-change.md) |
-| `security-review` | Threat modeling e revisão de permissões | [Guia](skills/security-review.md) |
-| `eval-design` | Conjuntos de testes e rubricas | [Guia](skills/eval-design.md) |
-| `memory-curation` | Propostas de memória com proveniência | [Guia](skills/memory-curation.md) |
-| `workflow-optimization` | Propostas de experimentos controlados | [Guia](skills/workflow-optimization.md) |
-| `mcp-integration` | Contratos de conectores MCP | [Guia](skills/mcp-integration.md) |
-| `multi-agent-routing` | Critérios para delegação e paralelismo | [Guia](skills/multi-agent-routing.md) |
+| task-decomposition | Planos e critérios de aceite | [Guia](skills/task-decomposition.md) |
+| evidence-research | Evidências verificáveis | [Guia](skills/evidence-research.md) |
+| code-change | Planejar patches, testes e rollback | [Guia](skills/code-change.md) |
+| security-review | Revisão de riscos e acesso | [Guia](skills/security-review.md) |
+| eval-design | Rubricas e benchmarks | [Guia](skills/eval-design.md) |
+| memory-curation | Propostas de memória | [Guia](skills/memory-curation.md) |
+| workflow-optimization | Experimentos de melhoria | [Guia](skills/workflow-optimization.md) |
+| mcp-integration | Planejar conexões MCP | [Guia](skills/mcp-integration.md) |
+| multi-agent-routing | Escolha entre 1 e vários agentes | [Guia](skills/multi-agent-routing.md) |
 
-## Como usar
-1. Examine o catálogo e selecione apenas a Skill pertinente à tarefa.
-2. Em clientes compatíveis com Agent Skills, registre a pasta correspondente e use seu mecanismo de ativação/carregamento progressivo.
-3. Sem cliente compatível, leia manualmente `skills/<nome>/SKILL.md` e siga as orientações.
-4. Edite a Skill e seu manual juntos; valide com `python scripts/validate_catalog.py`.
+## Uso atual
+1. Consulte a Skill correspondente e seu manual individual.
+2. Em um cliente compatível com Agent Skills, registre a pasta e use o carregamento progressivo oferecido pelo cliente.
+3. Para uso manual, leia `skills/<nome>/SKILL.md` antes de aplicar o procedimento.
+4. O comando Rust `run` **não lê os SKILL.md automaticamente** nem invoca scripts. Isso exige um resolvedor controlado, testes e avaliação de segurança futuros.
 
-**Atenção:** o comando `python -m harness.cli run` executa agentes, mas **não ativa automaticamente Skills**. Esse carregador sob demanda ainda não foi implementado. O runtime não executa scripts dentro de Skills e não fornece credenciais a essas instruções.
-
-Modificar Skills deve ocorrer via PR, com testes e revisão. Não habilite scripts remotos como ferramentas sem verificar origem e permissões.
+Verifique o catálogo com `python scripts/validate_catalog.py`. Não instale Skills de terceiros ou execute scripts sem revisar origem, conteúdo e permissões.
