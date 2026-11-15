@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 
 const MAX_CATALOG: u64 = 256 * 1024;
 const MAX_EVENTS: u64 = 1024 * 1024;
-const VALID_DOMAINS: &[&str] = &["planning","research","engineering","security","quality","intelligence","integrations","orchestration"];
+const VALID_DOMAINS: &[&str] = &["planning","research","engineering","security","quality","intelligence","integrations","orchestration","machine-learning","rag","ai","saas","frontend","backend"];
 
 #[derive(Debug, Deserialize)]
 pub struct Catalog {

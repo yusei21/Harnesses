@@ -1,0 +1,43 @@
+{
+  "skill": "saas-security-threat-model",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "saas-security-threat-model-1",
+      "task": "BOLA tenant",
+      "expected": [
+        "resource authorization",
+        "teste entre tenants",
+        "IDOR"
+      ],
+      "negative": [
+        "autorizar por token valido apenas"
+      ]
+    },
+    {
+      "id": "saas-security-threat-model-2",
+      "task": "RAG com documentos privados",
+      "expected": [
+        "ACL",
+        "prompt injection",
+        "logs"
+      ],
+      "negative": [
+        "filtrar tenant no prompt apenas"
+      ]
+    },
+    {
+      "id": "saas-security-threat-model-3",
+      "task": "Upload e webhook",
+      "expected": [
+        "SSRF",
+        "assinatura",
+        "segredos",
+        "rate limit"
+      ],
+      "negative": [
+        "ignorar retries e redirects"
+      ]
+    }
+  ]
+}

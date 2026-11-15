@@ -3,7 +3,7 @@ use std::path::PathBuf;
 fn root()->PathBuf {PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..")}
 #[test] fn real_catalog_is_valid() {
     let c=load_catalog(&root()).unwrap();
-    assert_eq!(c.capabilities.len(),12);
+    assert_eq!(c.capabilities.len(),21);
     let a=audit_catalog(&root(),&c);
     assert_eq!(a.status,"passed","{:?}",a.findings);
     assert!(a.findings.iter().all(|x|x.severity!="error"));
