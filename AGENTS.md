@@ -22,3 +22,7 @@ python -m harness.cli eval
 ## Especialização de IA/ML e SaaS
 
 As 9 Skills de domínio em `docs/ML_SAAS_STRATEGY.md` não são ativadas automaticamente. Não copiar código/arquivos do ECC sem revisão de licença e segurança. Priorizar datasets de pesquisa com proveniência, avaliação sem vazamento, isolamento de tenants e tests adversariais. Para alterações nessas Skills, rodar `python scripts/validate_domain_skills.py`.
+
+## Skills avançadas e avaliações
+
+Para `multi-agent-routing`, `code-change` e `rust-quality-gate`, atualize referências e casos junto ao SKILL.md. Verifique `python scripts/validate_skill_quality.py` e `cargo test --manifest-path rust/Cargo.toml --all-targets`; testes estruturais não comprovam melhoria semântica em LLMs. Veja `docs/SKILL_ENGINEERING.md`.

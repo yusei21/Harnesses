@@ -1,0 +1,151 @@
+{
+  "skill": "multi-agent-routing",
+  "purpose": "Validação determinística do plano Rust, não avaliação semântica de decisão LLM.",
+  "cases": [
+    {
+      "id": "single-valid",
+      "description": "Uma etapa local, sem necessidade de delegação",
+      "expected_valid": true,
+      "plan": {
+        "goal": "Descrever módulo",
+        "stages": [
+          {
+            "agents": [
+              {
+                "name": "engineer",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              }
+            ]
+          }
+        ],
+        "max_calls": 1,
+        "max_parallel": 1,
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "parallel-valid",
+      "description": "Dois especialistas independentes no mesmo estágio",
+      "expected_valid": true,
+      "plan": {
+        "goal": "Revisar requisitos",
+        "stages": [
+          {
+            "agents": [
+              {
+                "name": "researcher",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              },
+              {
+                "name": "engineer",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              }
+            ]
+          }
+        ],
+        "max_calls": 2,
+        "max_parallel": 2,
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "cloud-denied",
+      "description": "Modelo de nuvem sem consentimento deve falhar",
+      "expected_valid": false,
+      "plan": {
+        "goal": "Analisar mudanças",
+        "stages": [
+          {
+            "agents": [
+              {
+                "name": "reviewer",
+                "route": {
+                  "provider": "openai",
+                  "model": "gpt-model"
+                }
+              }
+            ]
+          }
+        ],
+        "max_calls": 1,
+        "max_parallel": 1,
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "duplicate-denied",
+      "description": "Mesmo agente repetido em dois estágios deve falhar",
+      "expected_valid": false,
+      "plan": {
+        "goal": "Revisar",
+        "stages": [
+          {
+            "agents": [
+              {
+                "name": "planner",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              }
+            ]
+          },
+          {
+            "agents": [
+              {
+                "name": "planner",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              }
+            ]
+          }
+        ],
+        "max_calls": 2,
+        "max_parallel": 2,
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "fanout-denied",
+      "description": "Concorrência acima do limite deve falhar",
+      "expected_valid": false,
+      "plan": {
+        "goal": "Analisar",
+        "stages": [
+          {
+            "agents": [
+              {
+                "name": "planner",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              },
+              {
+                "name": "researcher",
+                "route": {
+                  "provider": "ollama",
+                  "model": "qwen3"
+                }
+              }
+            ]
+          }
+        ],
+        "max_calls": 2,
+        "max_parallel": 1,
+        "allow_cloud": false
+      }
+    }
+  ]
+}

@@ -45,3 +45,11 @@ Veja [CAPABILITIES.md](CAPABILITIES.md) e [ECC_ADOPTION.md](ECC_ADOPTION.md).
 Cada Skill possui `SKILL.md`, manual próprio em `docs/skills/`, referência em `references/` e três rubricas em `evals/`. Os cenários são **critérios de avaliação, não medições de modelos reais**. O catálogo Rust sugere por metadados e não carrega o texto automaticamente no contexto.
 
 Verifique com `python scripts/validate_domain_skills.py`, `cargo test --manifest-path rust/Cargo.toml --all-targets` e `cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit`.
+
+## Três Skills aprofundadas
+
+- [multi-agent-routing](skills/multi-agent-routing.md): matriz de decisão, contrato Rust e testes de aceitação.
+- [code-change](skills/code-change.md): impacto, rollback e rubricas de implementação.
+- [rust-quality-gate](skills/rust-quality-gate.md): comandos Cargo e análise de riscos de Tokio e subprocessos.
+
+O padrão está descrito em [SKILL_ENGINEERING.md](SKILL_ENGINEERING.md). Os cenários garantem integridade e contratos, não medem qualidade de LLMs em produção.

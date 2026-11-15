@@ -33,3 +33,7 @@ Para mistura de modelos, detalhes em [RUST_CORE.md](docs/RUST_CORE.md) e [PROVID
 - [Segurança](docs/SECURITY.md), [status](docs/STATUS.md), [pesquisa](docs/RESEARCH.md)
 
 Consulte [Skills](docs/SKILLS.md), [guia de especialização](docs/ML_SAAS_STRATEGY.md) e [origem das ideias do ECC](docs/ECC_ADOPTION.md).
+
+## Skills operacionais com cenários de regressão
+
+As Skills `multi-agent-routing`, `code-change` e `rust-quality-gate` agora incluem referências e avaliações específicas, mantendo os nove domínios de IA/ML e SaaS já presentes na `main`. Veja [SKILL_ENGINEERING.md](docs/SKILL_ENGINEERING.md). Verifique com `python scripts/validate_skill_quality.py`.
