@@ -1,0 +1,35 @@
+[
+  {
+    "id": "research",
+    "goal": "Pesquisar documentação de protocolos de agentes",
+    "expected_agents": [
+      "planner",
+      "researcher"
+    ]
+  },
+  {
+    "id": "code",
+    "goal": "Investigar bug na API e corrigir implementação",
+    "expected_agents": [
+      "planner",
+      "researcher",
+      "engineer",
+      "reviewer"
+    ]
+  },
+  {
+    "id": "eval",
+    "goal": "Validar testes e qualidade",
+    "expected_agents": [
+      "planner",
+      "evaluator"
+    ]
+  },
+  {
+    "id": "simple",
+    "goal": "Explicar arquitetura",
+    "expected_agents": [
+      "planner"
+    ]
+  }
+]

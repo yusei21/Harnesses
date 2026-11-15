@@ -1,0 +1,26 @@
+{
+  "name": "evaluator",
+  "role": "avaliação",
+  "description": "Executa rubricas, testes de regressão e compara candidatos com baseline.",
+  "triggers": [
+    "eval",
+    "regressão",
+    "otimização"
+  ],
+  "inputs": [
+    "casos",
+    "baseline",
+    "candidato"
+  ],
+  "outputs": [
+    "métricas",
+    "comparativo",
+    "evidências"
+  ],
+  "tools": [
+    "offline eval runner"
+  ],
+  "delegation": "não",
+  "risk": "read",
+  "docs": "docs/agents/evaluator.md"
+}

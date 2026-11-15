@@ -1,0 +1,26 @@
+{
+  "name": "reviewer",
+  "role": "revisão independente",
+  "description": "Revisa segurança, confiabilidade e critérios de aceite sem aprovar mudanças perigosas.",
+  "triggers": [
+    "alterações de código",
+    "PR",
+    "deploy"
+  ],
+  "inputs": [
+    "diff",
+    "testes",
+    "requisitos"
+  ],
+  "outputs": [
+    "achados",
+    "severidades",
+    "recomendação"
+  ],
+  "tools": [
+    "read-only test results"
+  ],
+  "delegation": "não",
+  "risk": "read",
+  "docs": "docs/agents/reviewer.md"
+}

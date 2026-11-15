@@ -1,0 +1,23 @@
+{
+  "name": "planner",
+  "role": "planejamento e roteamento",
+  "description": "Decompõe o objetivo, escolhe execução simples ou delegação e define critérios de aceite.",
+  "triggers": [
+    "objetivos complexos",
+    "múltiplas etapas"
+  ],
+  "inputs": [
+    "objetivo",
+    "restrições",
+    "orçamento"
+  ],
+  "outputs": [
+    "plano",
+    "dependências",
+    "critérios de aceite"
+  ],
+  "tools": [],
+  "delegation": "somente quando justificada",
+  "risk": "read",
+  "docs": "docs/agents/planner.md"
+}
