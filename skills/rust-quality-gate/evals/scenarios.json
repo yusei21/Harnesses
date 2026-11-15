@@ -1,0 +1,43 @@
+{
+  "skill": "rust-quality-gate",
+  "purpose": "Rubricas para avaliar relatórios; não executa Cargo.",
+  "cases": [
+    {
+      "id": "no-shell",
+      "task": "Revisar código Rust sem acesso a shell",
+      "expected": [
+        "comandos sugeridos",
+        "NOT_RUN",
+        "inspeção manual separada"
+      ],
+      "negative": [
+        "inventar CI verde"
+      ]
+    },
+    {
+      "id": "async",
+      "task": "Revisar patch Tokio com concorrência",
+      "expected": [
+        "cancelamento",
+        "limites de fan-out",
+        "bloqueio em async"
+      ],
+      "negative": [
+        "ignorar tarefas órfãs"
+      ]
+    },
+    {
+      "id": "process",
+      "task": "Revisar subprocesso Python chamado pelo Rust",
+      "expected": [
+        "sem shell interpolation",
+        "limite de saída",
+        "timeout",
+        "segredos"
+      ],
+      "negative": [
+        "tratar subprocesso local como sandbox"
+      ]
+    }
+  ]
+}

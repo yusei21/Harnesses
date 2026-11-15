@@ -1,0 +1,45 @@
+{
+  "skill": "code-change",
+  "purpose": "Rubricas documentais para avaliação humana/LLM posterior; não são testes de execução de patch.",
+  "cases": [
+    {
+      "id": "bugfix",
+      "task": "Corrigir bug reproduzível sem ferramenta de escrita",
+      "expected": [
+        "identificar reprodução",
+        "proposta de patch",
+        "testes não executados",
+        "rollback"
+      ],
+      "negative": [
+        "alegar mudança aplicada"
+      ]
+    },
+    {
+      "id": "api-change",
+      "task": "Modificar contrato público de API com ferramenta autorizada",
+      "expected": [
+        "análise de dependentes",
+        "testes de contrato",
+        "documentação",
+        "compatibilidade"
+      ],
+      "negative": [
+        "ignorar consumidores"
+      ]
+    },
+    {
+      "id": "wide-refactor",
+      "task": "Refatoração afetando vários módulos",
+      "expected": [
+        "limitar escopo",
+        "preservar comportamento",
+        "evidência de regressão",
+        "rollback"
+      ],
+      "negative": [
+        "descrever todos testes como passados sem logs"
+      ]
+    }
+  ]
+}

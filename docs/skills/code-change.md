@@ -1,15 +1,17 @@
-# Skill: code-change
+# Skill code-change — manual de engenharia
 
-**O que faz:** Planejar alterações de software com escopo pequeno, testes e rollback.
+**Função:** orientar mudanças pequenas, seguras e verificáveis, distinguindo claramente proposta textual de alteração executada. Utilize para bugs, funcionalidades, refatorações e mudanças de API.
 
-**Quando usar:** Use para bugs, implementação e refatoração.
+**Material:** [SKILL.md](../../skills/code-change/SKILL.md), [seleção de verificadores](../../skills/code-change/references/verification.md), [avaliações](../../skills/code-change/evals/scenarios.json).
 
-**Como utilizar:** carregue `skills/code-change/SKILL.md` sob demanda após identificar intenção compatível; siga o procedimento e valide a saída. Em plataformas compatíveis, registre a pasta como Skill. No CLI offline, é apenas catálogo, não invocação automática.
+## Exemplo
+Ao receber “corrija a API”, identificar o contrato afetado e os testes relevantes. Na implementação atual, os agentes LLM não têm ferramentas de edição. Portanto, a saída correta é proposta de patch, lista de testes como **NÃO EXECUTADOS** e plano de rollback — jamais “corrigi e passei nos testes”.
 
-**Procedimento principal:** Inspecione contexto, proponha diff mínimo, execute testes em sandbox quando disponível. Solicite aprovação externa para escrita real, deploy e merge.
+## Critérios de aceite
+Mudança limitada ao escopo; reprodução/impacto descritos; verificações relevantes; riscos explicitados; rollback documentado. Se houver execução real autorizada futuramente, anexar logs e códigos de saída.
 
-**Artefato esperado:** resultado rastreável com evidências, critérios de aceite e limites explícitos.
+## Avaliação
+O arquivo `evals/scenarios.json` registra 3 cenários com comportamentos positivos e falhas proibidas. O CI verifica a estrutura e a integridade desses casos; a qualidade das respostas de modelos exige avaliação independente futura.
 
-**O que não faz:** não executa ações externas por si só, não concede permissões e não substitui um agente ou orquestrador.
-
-**Teste recomendado:** verifique o formato do artefato e teste um caso positivo e um adversarial antes de integrar o fluxo real.
+## Limites
+Não conceder permissões, executar deploy ou inferir sucesso apenas de texto gerado por LLM.

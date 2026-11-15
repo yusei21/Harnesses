@@ -1,15 +1,24 @@
-# Skill: multi-agent-routing
+# Skill multi-agent-routing — manual de engenharia
 
-**O que faz:** Escolher entre agente único, agente como ferramenta, handoff e paralelismo.
+**Responsabilidade:** propor a topologia de execução mais simples que atende aos requisitos. Esta Skill não escalona nem autoriza agentes: o Rust valida os contratos e controla a execução.
 
-**Quando usar:** Use quando houver tarefas independentes ou contextos especializados.
+**Acionamento:** planejamento de tarefas com múltiplas etapas, paralelismo, handoffs, dependências ou redução de custo. Para uma tarefa atômica, evite ativar a Skill.
 
-**Como utilizar:** carregue `skills/multi-agent-routing/SKILL.md` sob demanda após identificar intenção compatível; siga o procedimento e valide a saída. Em plataformas compatíveis, registre a pasta como Skill. No CLI offline, é apenas catálogo, não invocação automática.
+**Arquivos:** [SKILL.md](../../skills/multi-agent-routing/SKILL.md), [matriz de decisão](../../skills/multi-agent-routing/references/decision-matrix.md), [contrato Rust](../../skills/multi-agent-routing/references/execution-contract.md), [casos de teste](../../skills/multi-agent-routing/evals/scenarios.json).
 
-**Procedimento principal:** Prefira agente único. Delegue apenas quando houver benefício verificável; limite fanout, profundidade e orçamento; sintetize artefatos, não raciocínios privados.
+## Exemplo
+Objetivo: analisar uma arquitetura; planejamento primeiro, pesquisa e engenharia independentes depois, revisão por último. A notação CLI Rust é:
+```bash
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-core -- run \
+  --provider ollama --model qwen3 \
+  --stages 'planner|researcher,engineer|reviewer' \
+  --max-calls 4 --max-parallel 2 \
+  --task 'Revisar arquitetura'
+```
+O exemplo requer Ollama configurado e executa inferência. O cenário JSON é verificado **sem fazer chamadas LLM** por `cargo test --manifest-path rust/Cargo.toml --all-targets`.
 
-**Artefato esperado:** resultado rastreável com evidências, critérios de aceite e limites explícitos.
+## Aceitação
+Exigir plano válido, dependências claras, sem nomes repetidos, sem execução de nuvem não consentida e justificativa para paralelismo. Casos negativos devem ser rejeitados por `validate_plan`.
 
-**O que não faz:** não executa ações externas por si só, não concede permissões e não substitui um agente ou orquestrador.
-
-**Teste recomendado:** verifique o formato do artefato e teste um caso positivo e um adversarial antes de integrar o fluxo real.
+## Limites
+Roteamento heurístico e testes estruturais não demonstram melhora de qualidade, custo ou latência de LLMs. A execução atual não habilita ferramentas de escrita nem A2A.

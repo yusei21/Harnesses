@@ -29,3 +29,11 @@ O comando `suggest` somente retorna candidatos; o Rust não injeta o SKILL.md au
 Ao adicionar uma nova Skill, crie seu SKILL.md, documentação em `docs/skills/`, entrada no catálogo e testes. Não execute scripts vindos de Skills de terceiros sem avaliação de segurança.
 
 Veja [CAPABILITIES.md](CAPABILITIES.md) e [ECC_ADOPTION.md](ECC_ADOPTION.md).
+
+## Pilotos de nível avançado
+
+- [Multi-agent routing](skills/multi-agent-routing.md): matriz de decisão, contrato Rust e cenários válidos/negativos.
+- [Code change](skills/code-change.md): protocolo de mudança mínima, evidências de testes, rollback e rubricas.
+- [Rust quality gate](skills/rust-quality-gate.md): checks Cargo, revisão de riscos Tokio/subprocesso e rubricas.
+
+Os arquivos das três Skills têm `references/` e `evals/`. Para padrões, maturidade e limitações dos testes, veja [SKILL_ENGINEERING.md](SKILL_ENGINEERING.md).

@@ -1,18 +1,20 @@
-# Skill: rust-quality-gate
+# Skill rust-quality-gate — manual de engenharia
 
-**Objetivo:** Definir verificações reproduzíveis de qualidade Rust com testes e revisão de risco.
+**Função:** reunir procedimento de verificação Rust para mudança em runtime, concorrência Tokio, bridge Python e políticas.
 
-**Quando usar:** Use em alterações do runtime e integrações de ferramentas.
+**Material:** [SKILL.md](../../skills/rust-quality-gate/SKILL.md), [comandos e superfícies de risco](../../skills/rust-quality-gate/references/checks.md), [avaliações](../../skills/rust-quality-gate/evals/scenarios.json).
 
-**Passos:**
-1. Verifique formato com cargo fmt --check, depois cargo test.
-2. Verifique lints com cargo clippy --all-targets -- -D warnings quando instalado.
-3. Examine alterações de políticas e processos, cuidado com fuga de dados e permissões.
-4. Registre resultados exatos e erros; não declare testes executados sem evidência.
-5. Aplique patches somente com execução autorizada.
+## Uso com executor autorizado
+```bash
+cargo fmt --manifest-path rust/Cargo.toml -- --check
+cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings
+cargo test --manifest-path rust/Cargo.toml --all-targets
+```
 
-**Uso local:** `cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit` para auditoria; `suggest QUERY` para consulta seletiva; `insights examples/observations.json` para recomendações. Essas operações são somente leitura.
+Sem executor, indicar os comandos como recomendações e marcar status `NOT_RUN`. Consulte o CI para identificar o que é realmente exigido pelo projeto; uma Skill não altera gates existentes.
 
-**Critérios de sucesso:** resultado verificável, achados respaldados por arquivos ou eventos, nenhuma alteração automática.
+## Aceitação
+Status e evidência para cada check; revisão de concorrência, paths, processos e segredos; lista de falhas e sua gravidade. Não confundir compilação sem erro com garantia de segurança.
 
-**Limitações:** sem embeddings, sem auditoria semântica por LLM, sem execução de hooks e sem captura automática de sessões.
+## Avaliação
+Os três cenários em `evals/scenarios.json` cobrem ausência de shell, concorrência Tokio e subprocessos. A validação automatizada é estrutural, não benchmark de qualidade LLM.

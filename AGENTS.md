@@ -18,3 +18,7 @@ python -m unittest discover -s tests -v
 python -m harness.cli eval
 ```
 - Recomendado antes de merge: executar também `cargo fmt --manifest-path rust/Cargo.toml -- --check` e `cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings`; essas verificações ainda não são gates obrigatórios do CI nesta fase.
+
+## Desenvolvimento de Skills (pilotos)
+
+Ao modificar `multi-agent-routing`, `code-change` ou `rust-quality-gate`, atualizar referências, rubricas e cenários ao lado do SKILL.md. Validar com `python scripts/validate_skill_quality.py`, `python -m unittest discover -s tests -v` e `cargo test --manifest-path rust/Cargo.toml --all-targets`. Não confundir testes estruturais com avaliação de resultado de modelos. Consulte `docs/SKILL_ENGINEERING.md`.
