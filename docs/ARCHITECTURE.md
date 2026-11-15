@@ -1,42 +1,27 @@
-# Arquitetura
+# Arquitetura atual
 
-## Componentes
-- **Orquestrador**: objetivo, limites, seleção, aprovações, agregação e erros.
-- **Workers**: agentes especializados com entradas/saídas tipadas.
-- **Skills**: instruções e scripts carregáveis sob demanda.
-- **Adapters**: LLM, ferramentas, MCP/A2A, armazenamento e sandbox.
-- **Policy engine**: autorização externa ao modelo; fail closed.
-- **Telemetry**: traces com mínimo necessário; sem prompt completo por padrão.
-- **Evals**: roteamento/política (offline); desempenho real exige benchmark adicional.
-- **Evolution loop**: proposta -> experimento -> revisão -> promoção manual.
-
-## Fluxo
 ```mermaid
 flowchart TD
- U[Objetivo] --> P[Policy & Budget]
- P --> R[Router / Planner]
- R -->|simples| W[Worker único]
- R -->|justificado| D[Subagentes especializados]
- D --> W
- W --> T[Tools / Skills]
- T --> V[Validação + Reviewer]
- V --> A[Artefatos + trace sanitizado]
- A --> E[Evals e memória proposta]
- E --> G{Gate humano + regressão?}
- G -->|sim| PR[PR versionado]
- G -->|não| STOP[Descartar proposta]
+ U[Objetivo local] --> G[Consentimento e limites]
+ G --> R[Router com override por agente]
+ R --> P[Planner LLM]
+ P --> E[Engineer ou Researcher LLM]
+ E --> V[Reviewer LLM]
+ V --> O[Resposta final]
+ P --> H[HTTP adapter restrito]
+ E --> H
+ V --> H
+ H --> A[OpenAI Responses]
+ H --> B[Anthropic Messages]
+ H --> C[Gemini generateContent]
+ H --> D[Ollama loopback]
 ```
 
-## Padrões multiagente
-- **Single agent**: padrão inicial.
-- **Manager + agents-as-tools**: manager mantém titularidade da tarefa e agrega resultados.
-- **Handoff**: especialista assume responsabilidade; requer transferência explícita de contexto/escopo.
-- **Parallel fan-out**: apenas subtarefas independentes, com concorrência, tempo e gasto limitados.
-- **Sequential deterministic**: integrações críticas, deploy, compliance e workflows repetíveis.
-- **Evaluator-optimizer**: offline, limitado por benchmarks e revisão; sem loop recursivo ilimitado.
+O runtime real (`harness/live.py`) é **sequencial** e somente de texto. Tem até cinco agentes e cinco chamadas por execução, conta tokens retornados se disponíveis, mas não garante preço/limite monetário. `harness/providers.py` não habilita tool calling, downloads, shells nem escrita em disco. Roteamento por função pode escolher provedores distintos; não há paralelismo. LLMs não possuem capacidade operacional sobre o repositório.
 
-## Contratos obrigatórios antes da produção
-Idempotency keys em ferramentas de escrita; isolamento por tenant; cancellation; timeouts; retries com backoff; checkpoint persistente; quotas/tokens/custos; autenticação e consentimento de tools; versões e schema de cada artifact; observabilidade estruturada; proteção contra prompt injection; avaliações de segurança.
+A foundation `harness/core.py` continua fornecendo contratos, política demonstrativa fail-closed, trace mínimo e simulação offline. A política demonstrativa não é mecanismo de aprovação autenticada. Protocolo MCP e A2A, memória persistente, sandbox, orquestração durável e autoevolução são **propostas não implementadas**.
 
-## O que a demo NÃO faz
-Não chama LLM, executa shell, acessa MCP, comunica A2A, lança threads, persiste checkpoints, nem altera arquivos. A demonstração ensina contratos e gates com execução reproduzível.
+## Evolução arquitetural
+Prioridades: testes de qualidade com holdout, quotas/custos, checkpoints transacionais, sandbox e ferramentas read-only com permissões verificadas. A2A faz sentido para agentes remotos independentes; para delegação local o runtime pode ser simples. Não exponha scripts de Skills como ferramentas sem revisão e isolamento.
+
+Veja [PROVIDERS.md](PROVIDERS.md), [STATUS.md](STATUS.md), [SECURITY.md](SECURITY.md), [EVOLUTION.md](EVOLUTION.md).

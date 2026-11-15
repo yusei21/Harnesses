@@ -1,20 +1,16 @@
-# Pesquisa e referências
+# Referências verificadas em 15/11/2026
 
-Consulta de documentação pública: 15/11/2026. Verifique versões e especificações antes de implementar adapters.
+- [OpenAI Responses API](https://developers.openai.com/api/reference/resources/responses/methods/create): `POST /v1/responses`, `instructions`, `input`, `store=false`.
+- [Anthropic Messages API](https://platform.claude.com/docs/en/api/messages/create): `POST /v1/messages`, `anthropic-version: 2026-10-21`.
+- [Gemini generateContent](https://ai.google.dev/api/generate-content): `POST /v1beta/models/{model}:generateContent`.
+- [Gemini Interactions](https://ai.google.dev/gemini-api/docs/interactions-overview): recomendada desde junho/2026; migração futura.
+- [Ollama API](https://docs.ollama.com/api/introduction): `POST /api/chat` via loopback.
+- [Agent Skills](https://agentskills.io/specification): `SKILL.md`.
+- [MCP](https://modelcontextprotocol.io/specification): ferramentas, ainda não integrado.
+- [A2A](https://a2a-protocol.org/latest/): delegação remota, ainda não integrada.
+- [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview): inspiração para durabilidade.
+- [Temporal](https://docs.temporal.io/): persistência de workflows.
+- [DSPy](https://dspy.ai/): otimização via evals.
+- [Letta](https://docs.letta.com/): memória persistente.
 
-- [OpenAI — Building agents](https://developers.openai.com/tracks/building-agents) — handoffs, guardrails, sessões e tracing.
-- [OpenAI — Agents SDK](https://developers.openai.com/api/docs/guides/agents/sdk) — orquestração gerenciada em código.
-- [Agent Skills — spec](https://agentskills.io/specification) — estrutura portável de SKILL.md.
-- [LangChain — Deep Agents](https://docs.langchain.com/oss/python/deepagents/overview) — filesystem, tarefas e subagentes.
-- [Google ADK](https://google.github.io/adk-docs/) — workflows e agentes.
-- [A2A](https://a2a-protocol.org/latest/) — interoperabilidade entre agentes.
-- [MCP](https://modelcontextprotocol.io/specification) — conexão com ferramentas e recursos.
-- [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) — agentes, workflows, estado.
-- [Temporal](https://docs.temporal.io/) — durable execution.
-- [DSPy](https://dspy.ai/) — otimização baseada em exemplos e métricas.
-- [Letta](https://docs.letta.com/) — memória persistente.
-- [OpenHands](https://docs.openhands.dev/) — agentes de desenvolvimento em ambientes executáveis.
-- [MCP security practices](https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices) — segurança e identidade (consulte a versão vigente).
-
-## Síntese
-Não adotar tudo de uma vez. O harness deve permanecer independente do framework até que um requisito concreto demande LangGraph, ADK, Microsoft ou outro. A2A não é necessário para subagentes locais. MCP não é sinônimo de autorizar qualquer ferramenta. Autoevolução necessita evals, aprovações e rollback.
+O runtime foi mantido pequeno e independente de SDKs; não equivale a um framework completo de execução autônoma.

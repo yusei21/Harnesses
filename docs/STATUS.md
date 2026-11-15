@@ -1,23 +1,19 @@
-# Estado dos recursos
+# Estado da implementação (runtime local multi-provedor)
 
-| Recurso | Situação | Evidência |
-|---|---|---|
-| Contratos de agentes | Implementado (declarativo) | agents/*.json |
-| Skills portáveis | Implementado (conteúdo) | skills/*/SKILL.md |
-| Documentação individual | Implementado | docs/agents e docs/skills |
-| CLI offline e artefatos simulados | Implementado | harness/cli.py |
-| Seleção simples de especialistas | Implementado (heurística) | harness/core.py |
-| Política de bloqueio e aprovação de teste | Implementado (somente offline) | harness/core.py |
-| Traces mínimos | Implementado (em memória) | trace_envelope |
-| Evals de roteamento e policy | Implementado | evals + testes |
-| LLM real e output schemas robustos | Interface planejada | harness/adapters.py |
-| MCP / A2A reais | Interfaces e guias | docs/INTEGRATIONS.md |
-| Execução paralela | Planejado | docs/ORCHESTRATION.md |
-| Sandbox e shell | Planejado | docs/SECURITY.md |
-| Aprovação autenticada | Planejado | docs/SECURITY.md |
-| Persistência de checkpoints | Interface planejada | harness/adapters.py |
-| Memória e dreaming | Protocolo proposto | docs/EVOLUTION.md |
-| Autoevolução por PR | Fluxo proposto | docs/EVOLUTION.md |
-| Evals end-to-end com LLM | Planejado | docs/EVOLUTION.md |
+| Componente | Estado |
+|---|---|
+| 7 contratos de agentes e documentação individual | Implementado |
+| 9 Skills com SKILL.md e documentação individual | Implementado |
+| CLI offline e CI | Implementado |
+| OpenAI, Anthropic, Gemini e Ollama via HTTP | Implementado; testes com mock |
+| Multiagente sequencial com overrides de provedores | Implementado (somente texto) |
+| Consentimento para cloud e destinos HTTP fechados | Implementado |
+| Limites de chamadas/tamanho e timeouts | Implementado |
+| Contabilidade de custo monetário | Não implementado |
+| MCP, A2A, ferramentas e shell | Não implementado |
+| Sandbox de execução, autenticação de approvals | Não implementado |
+| Checkpoints duráveis, memória persistente, dreaming | Não implementado |
+| Autoevolução e promoção de Skills | Não implementado |
+| Evals end-to-end com modelos reais | Não implementado |
 
-Não usar esta foundation para operações com credenciais, dados sensíveis ou infraestrutura de produção.
+Leia docs/PROVIDERS.md. Chamar modelos realmente não significa executar ações locais ou remotas.
