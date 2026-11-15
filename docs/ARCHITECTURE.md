@@ -1,27 +1,26 @@
-# Arquitetura atual
+# Arquitetura Rust-first (estado atual)
 
 ```mermaid
 flowchart TD
- U[Objetivo local] --> G[Consentimento e limites]
- G --> R[Router com override por agente]
- R --> P[Planner LLM]
- P --> E[Engineer ou Researcher LLM]
- E --> V[Reviewer LLM]
- V --> O[Resposta final]
- P --> H[HTTP adapter restrito]
- E --> H
- V --> H
- H --> A[OpenAI Responses]
- H --> B[Anthropic Messages]
- H --> C[Gemini generateContent]
- H --> D[Ollama loopback]
+ U[CLI Rust e tarefa] --> V[Validate: consentimento, rotas, calls, fanout]
+ V --> P[Estágio 1 - planner]
+ P --> E[Estágio 2 - researcher e engineer em paralelo]
+ E --> R[Estágio 3 - reviewer]
+ P --> B[Ponte Python JSON stdin/stdout]
+ E --> B
+ R --> B
+ B --> M[OpenAI / Anthropic / Gemini / Ollama]
+ R --> OUT[Resposta e eventos sem prompts]
 ```
 
-O runtime real (`harness/live.py`) é **sequencial** e somente de texto. Tem até cinco agentes e cinco chamadas por execução, conta tokens retornados se disponíveis, mas não garante preço/limite monetário. `harness/providers.py` não habilita tool calling, downloads, shells nem escrita em disco. Roteamento por função pode escolher provedores distintos; não há paralelismo. LLMs não possuem capacidade operacional sobre o repositório.
+**Rust é o dono do runtime:** plano tipado, limites, fan-out concorrente Tokio, ordenação determinística, validação prévia, política fail-closed e eventos.
 
-A foundation `harness/core.py` continua fornecendo contratos, política demonstrativa fail-closed, trace mínimo e simulação offline. A política demonstrativa não é mecanismo de aprovação autenticada. Protocolo MCP e A2A, memória persistente, sandbox, orquestração durável e autoevolução são **propostas não implementadas**.
+**Python é o adaptador de IA:** ponte por subprocesso fixo `python3 -m harness.bridge`, chamando os provedores HTTP existentes. O código Python permanece acessível para experimentos, mas a CLI recomendada é a de Rust. O antigo CLI Python existe por compatibilidade.
 
-## Evolução arquitetural
-Prioridades: testes de qualidade com holdout, quotas/custos, checkpoints transacionais, sandbox e ferramentas read-only com permissões verificadas. A2A faz sentido para agentes remotos independentes; para delegação local o runtime pode ser simples. Não exponha scripts de Skills como ferramentas sem revisão e isolamento.
+**Skills e agentes:** os 7 papéis têm documentação individual; no runtime Rust os nomes são validados e a ponte Python fornece instruções dos papéis. As 9 Skills são arquivos portáveis, não são automaticamente carregadas. Não há execução de scripts das Skills.
 
-Veja [PROVIDERS.md](PROVIDERS.md), [STATUS.md](STATUS.md), [SECURITY.md](SECURITY.md), [EVOLUTION.md](EVOLUTION.md).
+**Segurança:** nenhum acesso a sistema de arquivos/shell por modelos, nenhum token de ferramenta, nenhum conector MCP/A2A conectado. O subprocesso Python é código local confiável, **não** é isolamento de SO. Respostas anteriores são dados não confiáveis em prompts. Limites de chamadas não garantem teto de custo.
+
+**Próxima fase:** orçamento de tokens/custo, persistência, evals de qualidade, ferramentas read-only autorizadas e isolamento antes de escrita.
+
+Detalhes: [RUST_CORE.md](RUST_CORE.md), [STATUS.md](STATUS.md), [PROVIDERS.md](PROVIDERS.md).

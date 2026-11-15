@@ -1,11 +1,11 @@
-name: harness-foundation-ci
+name: harness-ci
 on:
   push:
   pull_request:
 permissions:
   contents: read
 jobs:
-  validate:
+  python:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,3 +15,9 @@ jobs:
       - run: python scripts/validate_catalog.py
       - run: python -m unittest discover -s tests -v
       - run: python -m harness.cli eval
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --manifest-path rust/Cargo.toml --all-targets

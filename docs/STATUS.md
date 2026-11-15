@@ -1,19 +1,21 @@
-# Estado da implementação (runtime local multi-provedor)
+# Estado implementado — Rust-first
 
-| Componente | Estado |
-|---|---|
-| 7 contratos de agentes e documentação individual | Implementado |
-| 9 Skills com SKILL.md e documentação individual | Implementado |
-| CLI offline e CI | Implementado |
-| OpenAI, Anthropic, Gemini e Ollama via HTTP | Implementado; testes com mock |
-| Multiagente sequencial com overrides de provedores | Implementado (somente texto) |
-| Consentimento para cloud e destinos HTTP fechados | Implementado |
-| Limites de chamadas/tamanho e timeouts | Implementado |
-| Contabilidade de custo monetário | Não implementado |
-| MCP, A2A, ferramentas e shell | Não implementado |
-| Sandbox de execução, autenticação de approvals | Não implementado |
-| Checkpoints duráveis, memória persistente, dreaming | Não implementado |
-| Autoevolução e promoção de Skills | Não implementado |
-| Evals end-to-end com modelos reais | Não implementado |
+| Capacidade | Estado | Arquivo |
+|---|---|---|
+| Núcleo de orquestração Rust | Implementado, testes de unidade | rust/src/core.rs |
+| Stages sequenciais com fan-out paralelo limitado | Implementado, 3 simultâneos | rust/src/core.rs |
+| Limites de chamadas e consentimento antecipado | Implementado, não financeiro | rust/src/core.rs |
+| Regras fail-closed para ações com efeito colateral | Implementado como política; **sem ferramentas** | rust/src/core.rs |
+| Ponte Rust → Python via JSON | Implementada | rust/src/bridge.rs + harness/bridge.py |
+| OpenAI, Anthropic, Gemini e Ollama | Integração Python existente, tests mockados | harness/providers.py |
+| 7 agentes catalogados/documentados | Implementado | agents + docs/agents |
+| 9 Skills catalogadas/documentadas | Implementado; sem seleção dinâmica | skills + docs/skills |
+| CI Python/Rust | Implementado | .github/workflows/ci.yml |
+| Tools/MCP/A2A | Não implementado | docs/INTEGRATIONS.md |
+| Checkpoints persistentes | Não implementado | docs/EVOLUTION.md |
+| Shell, sandbox e edição de arquivos | Não implementado | docs/SECURITY.md |
+| Hooks autenticados / approvals | Não implementado | docs/SECURITY.md |
+| Memória persistente, dreaming, autoevolução | Não implementado | docs/EVOLUTION.md |
+| Limites monetários por token | Não implementado | docs/PROVIDERS.md |
 
-Leia docs/PROVIDERS.md. Chamar modelos realmente não significa executar ações locais ou remotas.
+As rotas HTTP têm testes de contrato simulados, não testes de conta de produção. A ponte não equivale a processo isolado. Não use como agente de programação autônomo irrestrito.
