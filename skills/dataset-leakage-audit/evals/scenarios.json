@@ -1,0 +1,43 @@
+{
+  "skill": "dataset-leakage-audit",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "dataset-leakage-audit-1",
+      "task": "Preprocessing antes do split",
+      "expected": [
+        "fit no treino",
+        "estatisticas de validacao",
+        "pipeline"
+      ],
+      "negative": [
+        "validar scaler global sem questionar"
+      ]
+    },
+    {
+      "id": "dataset-leakage-audit-2",
+      "task": "Dados temporais",
+      "expected": [
+        "future leakage",
+        "point in time",
+        "timestamps"
+      ],
+      "negative": [
+        "alegar causalidade sem timestamps"
+      ]
+    },
+    {
+      "id": "dataset-leakage-audit-3",
+      "task": "Dados sensiveis",
+      "expected": [
+        "proveniencia",
+        "licenca",
+        "PII",
+        "separacao"
+      ],
+      "negative": [
+        "enviar dataset privado a API sem consentimento"
+      ]
+    }
+  ]
+}

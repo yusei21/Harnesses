@@ -1,0 +1,45 @@
+{
+  "skill": "ml-experiment-design",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "ml-experiment-design-1",
+      "task": "Comparar dois classificadores",
+      "expected": [
+        "baseline",
+        "split reservado",
+        "metricas",
+        "sementes"
+      ],
+      "negative": [
+        "usar teste para ajustar hiperparametros"
+      ]
+    },
+    {
+      "id": "ml-experiment-design-2",
+      "task": "Estudo de ablação em rede neural",
+      "expected": [
+        "controle",
+        "custo",
+        "variancia",
+        "interpretacao"
+      ],
+      "negative": [
+        "inferir causalidade sem controles"
+      ]
+    },
+    {
+      "id": "ml-experiment-design-3",
+      "task": "Resultados em paper",
+      "expected": [
+        "versoes",
+        "incerteza",
+        "limites",
+        "reproducao"
+      ],
+      "negative": [
+        "inventar significancia estatistica"
+      ]
+    }
+  ]
+}

@@ -36,3 +36,15 @@ Para mistura de modelos, detalhes em [RUST_CORE.md](docs/RUST_CORE.md) e [PROVID
 Há 7 contratos de agentes e 12 Skills documentadas. O catálogo permite consultar metadados e recomendar Skills por gatilhos; **não** carrega automaticamente o conteúdo das Skills no pipeline LLM, não instala hooks e não concede ferramentas. O auditor atual é estrutural e possui heurísticas limitadas de divergência documental; não é detector semântico completo. Não há MCP/A2A, sandbox para ferramentas, memória RAG, ingestão automática de CLIs ou autoevolução. Essas etapas estão no roadmap.
 
 A arquitetura importa **ideias** do projeto MIT [ECC](https://github.com/affaan-m/ECC), não o conteúdo inteiro nem hooks de terceiros. Uso local por padrão; controle e revisão humana para ações com efeitos colaterais.
+
+## Perfis de uso: mestrado em IA/ML e desenvolvimento SaaS
+
+Adicionamos 9 Skills especializadas em experimentação científica, qualidade de dados, PyTorch, avaliação RAG/LLM, arquitetura SaaS, frontend, APIs e segurança. Cada uma é portátil e possui procedimentos, referências e avaliações negativas. O catálogo agora possui **21 Skills** em departamentos; nenhuma é injetada automaticamente no modelo.
+
+```bash
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- suggest "pytorch cuda treinamento"
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- suggest "rag retrieval embedding"
+python scripts/validate_domain_skills.py
+```
+
+Consulte [Skills](docs/SKILLS.md), [guia de especialização](docs/ML_SAAS_STRATEGY.md) e [origem das ideias do ECC](docs/ECC_ADOPTION.md).

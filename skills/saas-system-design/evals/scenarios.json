@@ -1,0 +1,43 @@
+{
+  "skill": "saas-system-design",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "saas-system-design-1",
+      "task": "MVP B2B",
+      "expected": [
+        "tenancy",
+        "autorizacao",
+        "mvp",
+        "custo"
+      ],
+      "negative": [
+        "propor microservicos sem necessidade"
+      ]
+    },
+    {
+      "id": "saas-system-design-2",
+      "task": "Webhooks de billing",
+      "expected": [
+        "idempotencia",
+        "verificacao",
+        "retry"
+      ],
+      "negative": [
+        "acesso por webhook não verificado"
+      ]
+    },
+    {
+      "id": "saas-system-design-3",
+      "task": "Upload e busca de clientes",
+      "expected": [
+        "tenant",
+        "armazenamento",
+        "ACL"
+      ],
+      "negative": [
+        "misturar vetores entre tenants"
+      ]
+    }
+  ]
+}

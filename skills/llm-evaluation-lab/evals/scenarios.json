@@ -1,0 +1,43 @@
+{
+  "skill": "llm-evaluation-lab",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "llm-evaluation-lab-1",
+      "task": "Prompt A/B",
+      "expected": [
+        "baseline",
+        "holdout",
+        "custo",
+        "variancia"
+      ],
+      "negative": [
+        "promover por um exemplo"
+      ]
+    },
+    {
+      "id": "llm-evaluation-lab-2",
+      "task": "Agente com ferramentas",
+      "expected": [
+        "autorizacao",
+        "side effects",
+        "trace"
+      ],
+      "negative": [
+        "tratar texto dizendo teste passou como evidência"
+      ]
+    },
+    {
+      "id": "llm-evaluation-lab-3",
+      "task": "Juiz LLM discordante",
+      "expected": [
+        "calibracao",
+        "humanos",
+        "slices"
+      ],
+      "negative": [
+        "aceitar nota sem inspecao"
+      ]
+    }
+  ]
+}
