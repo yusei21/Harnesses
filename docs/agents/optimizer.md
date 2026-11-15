@@ -1,15 +1,28 @@
 # Agente: optimizer
 
-**Papel:** Recebe falhas agregadas e baseline; propõe alteração versionada com experimento.
+## O que faz
+Propõe hipóteses de melhoria e experimentos comparativos.
 
-**Quando usar:** Use quando há evidência repetível de problema de qualidade, custo ou latência.
+## Quando utilizar
+Use quando a etapa optimizer contribua de maneira verificável para a tarefa. Tarefas simples podem utilizar apenas um agente. Evite acrescentar agentes sem benefício real.
 
-**Como chamar:** o orquestrador seleciona o contrato em `agents/optimizer.json`, fornece apenas o contexto necessário e recebe saída estruturada. No modo offline, `OfflineWorker` simula a resposta: nenhum modelo é chamado.
+## Como usar no runtime real
+Pré-requisito: configurar um provedor em [Provedores](../PROVIDERS.md). Exemplo usando Ollama local:
 
-**Entrada / saída:** consulte `inputs` e `outputs` no JSON. Saídas devem carregar evidências, identificador da tarefa e critérios de aceite.
+```bash
+python -m harness.cli run --provider ollama --model qwen3 --agents optimizer --max-calls 1 --task "Analise este problema"
+```
 
-**Permissões e limites:** Não altera política, credenciais, modelos ou produção automaticamente.
+No pipeline multiprovedor, personalize o modelo deste papel por `--agent-model optimizer=openai:SEU_MODELO --allow-cloud`. A tarefa e respostas anteriores chegam como texto; não há acesso independente a ferramentas.
 
-**Critério de sucesso:** artefato auditável, sem extrapolar o escopo delegado, compatível com testes e políticas.
+## Contrato
+O arquivo `agents/optimizer.json` define descrição, entradas, saídas, gatilhos e risco previsto. O runtime de texto utiliza as instruções do papel declaradas em `harness/live.py`; o JSON é catálogo e guia de evolução, **não** uma especificação automaticamente aplicada ao modelo.
 
-**Falha e fallback:** devolva erro estruturado; não reinicie ações com efeitos colaterais sem idempotência e autorização.
+## Saída esperada
+Texto em português com conclusões e ressalvas que permitam revisão. Na orquestração sequencial, a saída fica em `outputs[]` do JSON retornado pelo CLI.
+
+## Restrições
+Não modifica Skills, prompts nem promove alterações automaticamente. O agente não pode se conceder aprovação. Se faltar informação, deve registrar a incerteza.
+
+## Teste
+Rode `python -m unittest discover -s tests -v` para verificar contratos e roteamento com mocks. Esse teste não garante a qualidade do conteúdo do LLM. Para avaliar qualidade, crie casos de referência com critérios objetivos e avalie usando modelo habilitado separadamente.

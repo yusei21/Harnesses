@@ -1,26 +1,26 @@
-# Operação da foundation
+# Operação
 
-## Pré-requisitos
-Python 3.11+. Na raiz:
+## Foundation offline
 ```bash
-python -m harness.cli catalog
-python -m harness.cli demo --task "Investigar bug na API"
-python -m harness.cli eval
 python scripts/validate_catalog.py
 python -m unittest discover -s tests -v
+python -m harness.cli eval
+python -m harness.cli catalog
+python -m harness.cli demo --task "Investigar bug"
 ```
 
-## Saídas
-`catalog` lista contratos e Skills; `demo` gera artefatos simulados com `kind=offline-demonstration` e trace sem prompt; `eval` checa testes de roteamento e bloqueio de escrita.
+## Agentes reais com modelo local
+```bash
+ollama pull qwen3
+python -m harness.cli run --provider ollama --model qwen3 --task "Revisar arquitetura"
+```
+Veja [PROVIDERS.md](PROVIDERS.md) para as APIs OpenAI, Anthropic e Gemini, `--allow-cloud` e mistura de provedores.
 
-## Adicionar Skill
-Crie `skills/<slug>/SKILL.md` (YAML com `name` e `description`); crie `docs/skills/<slug>.md`; atualize `docs/SKILLS.md`; valide. Não registre scripts sem revisão.
+## Agentes e Skills
+Cada agente possui JSON em `agents/` e manual correspondente em `docs/agents/`. Cada Skill possui `SKILL.md` e manual em `docs/skills/`. Ao alterar, atualize catálogos, docs e testes.
 
-## Adicionar agente
-Crie `agents/<slug>.json` contendo entradas, saídas, gatilhos, ferramentas e risco; crie `docs/agents/<slug>.md`; atualize `docs/AGENTS.md`; inclua eval.
+## Segurança operacional
+O runtime LLM não tem acesso a arquivos ou ferramentas. Seu resultado não executa mudanças. Não forneça dados privados em cloud sem autorização. Verifique quotas externas para evitar cobranças inesperadas.
 
-## Evoluir para produção
-Selecione um runtime (Deep Agents/LangGraph, Microsoft Agent Framework, Google ADK ou OpenAI Agents SDK) baseado nos requisitos, em vez de misturar frameworks sem necessidade. Implemente um `ModelAdapter`, ferramentas de sandbox e checkpoint com testes de integração. Habilite operações externas somente após implementar aprovação autenticada e auditoria.
-
-## Incidentes
-Cancelar execução, revogar credenciais comprometidas, congelar promoção de versões, preservar traces sanitizados, abrir incidente, reverter versão e rodar evals de regressão. Esta foundation não possui serviços vivos para cancelar.
+## Próximas integrações
+Checkpoint, aprovação autenticada, sandbox, MCP read-only, evals reais e depois A2A/auto-otimização com PRs aprovados.
