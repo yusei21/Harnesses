@@ -1,27 +1,25 @@
 # Catálogo de Skills
 
-Uma Skill é uma pasta com SKILL.md conforme Agent Skills, com carregamento progressivo. Não é agente nem ferramenta com permissões próprias.
+As Skills seguem pastas `skills/<nome>/SKILL.md` e possuem documentação `docs/skills/<nome>.md`. São procedimentos reutilizáveis; não são agentes nem ferramentas que concedem acesso à máquina.
 
-| Skill | Quando consultar | Guia |
+| Skill | O que oferece | Manual |
 |---|---|---|
-| `task-decomposition` | Use quando houver ambiguidades, múltiplas dependências ou entregas longas. | [Manual](skills/task-decomposition.md) |
-| `evidence-research` | Use para pesquisa, comparação de tecnologias e confirmação de documentação. | [Manual](skills/evidence-research.md) |
-| `code-change` | Use para bugs, implementação e refatoração. | [Manual](skills/code-change.md) |
-| `security-review` | Use em integração MCP, tools, mudanças de política e operações com dados. | [Manual](skills/security-review.md) |
-| `eval-design` | Use para medir qualidade de agentes ou comparar mudanças. | [Manual](skills/eval-design.md) |
-| `memory-curation` | Use quando padrões recorrentes merecerem persistir entre sessões. | [Manual](skills/memory-curation.md) |
-| `workflow-optimization` | Use após encontrar padrões de falha, custo ou latência nas avaliações. | [Manual](skills/workflow-optimization.md) |
-| `mcp-integration` | Use quando acessar ferramentas/recursos externos via MCP. | [Manual](skills/mcp-integration.md) |
-| `multi-agent-routing` | Use quando houver tarefas independentes ou contextos especializados. | [Manual](skills/multi-agent-routing.md) |
+| `task-decomposition` | Planejamento e critérios de aceite | [Guia](skills/task-decomposition.md) |
+| `evidence-research` | Pesquisa e análise de evidências | [Guia](skills/evidence-research.md) |
+| `code-change` | Patches pequenos, testes e rollback | [Guia](skills/code-change.md) |
+| `security-review` | Threat modeling e revisão de permissões | [Guia](skills/security-review.md) |
+| `eval-design` | Conjuntos de testes e rubricas | [Guia](skills/eval-design.md) |
+| `memory-curation` | Propostas de memória com proveniência | [Guia](skills/memory-curation.md) |
+| `workflow-optimization` | Propostas de experimentos controlados | [Guia](skills/workflow-optimization.md) |
+| `mcp-integration` | Contratos de conectores MCP | [Guia](skills/mcp-integration.md) |
+| `multi-agent-routing` | Critérios para delegação e paralelismo | [Guia](skills/multi-agent-routing.md) |
 
-## Instalação e uso
-1. Escolha Skill pelo nome/descrição; não carregue todas no prompt.
-2. Leia `skills/<nome>/SKILL.md` quando a tarefa justificar.
-3. Carregue material adicional só se necessário.
-4. Aplique políticas do runtime; instruções da Skill não podem elevar privilégios.
-5. Teste ao modificar uma Skill, atualizando a documentação individual.
+## Como usar
+1. Examine o catálogo e selecione apenas a Skill pertinente à tarefa.
+2. Em clientes compatíveis com Agent Skills, registre a pasta correspondente e use seu mecanismo de ativação/carregamento progressivo.
+3. Sem cliente compatível, leia manualmente `skills/<nome>/SKILL.md` e siga as orientações.
+4. Edite a Skill e seu manual juntos; valide com `python scripts/validate_catalog.py`.
 
-`python scripts/validate_catalog.py` verifica metadados básicos, consistência e presença de cada documentação. Esse validador não substitui o validador oficial completo `skills-ref`.
+**Atenção:** o comando `python -m harness.cli run` executa agentes, mas **não ativa automaticamente Skills**. Esse carregador sob demanda ainda não foi implementado. O runtime não executa scripts dentro de Skills e não fornece credenciais a essas instruções.
 
-## Evolução
-Novas Skills devem entrar por PR, com casos de avaliação, dono, objetivo e rollback. Não permita que um agente escreva a Skill e a publique automaticamente.
+Modificar Skills deve ocorrer via PR, com testes e revisão. Não habilite scripts remotos como ferramentas sem verificar origem e permissões.
