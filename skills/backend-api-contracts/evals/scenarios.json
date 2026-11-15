@@ -1,0 +1,42 @@
+{
+  "skill": "backend-api-contracts",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "backend-api-contracts-1",
+      "task": "Endpoint multi tenant",
+      "expected": [
+        "autorizacao",
+        "IDOR",
+        "tenant"
+      ],
+      "negative": [
+        "confiar em user_id da URL"
+      ]
+    },
+    {
+      "id": "backend-api-contracts-2",
+      "task": "Migração postgres",
+      "expected": [
+        "reversao",
+        "constraint",
+        "compatibilidade"
+      ],
+      "negative": [
+        "drop de coluna sem gate"
+      ]
+    },
+    {
+      "id": "backend-api-contracts-3",
+      "task": "Webhook",
+      "expected": [
+        "idempotencia",
+        "assinatura",
+        "retry"
+      ],
+      "negative": [
+        "processar evento duplicado duas vezes"
+      ]
+    }
+  ]
+}

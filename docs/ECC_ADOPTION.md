@@ -27,3 +27,14 @@ Manter catálogo canônico em Harnesses e gerar adapters configuráveis em uma f
 
 ## Atribuição
 Créditos ao projeto original pelas ideias de harness-audit, evolução de Skills, especialização e conhecimento progressivo. Reutilização de arquivos do ECC em mudanças futuras deve preservar licença MIT e avisos de copyright e fazer revisão de segurança individual.
+
+## Adaptação para IA/ML e SaaS — fase seguinte
+
+Inspirada por módulos existentes no ECC, incluindo `mle-workflow`, `pytorch-patterns`, `rag-pipeline-reviewer`, `fastapi-patterns`, `frontend-patterns` e `security-review`. Não são cópias: as nove Skills foram escritas com escopo e critérios específicos do Harnesses local-first e exigem validação antes de serem declaradas eficientes.
+
+- Pesquisa: experimentos reprodutíveis, dataset leakage, PyTorch e avaliação robusta de LLM/RAG.
+- SaaS: tenancy, contratos de API, UI acessível, autenticação e autorização, billing e operações seguras.
+- Formato portátil `SKILL.md` com carregamento progressivo. O catálogo Rust é fonte de metadados, não um executor de scripts do ECC.
+- Nenhum arquivo de hook ou agente executável foi copiado do ECC. Respeitar licença MIT e avisos de copyright ao reutilizar conteúdo do projeto original no futuro.
+
+Fonte: https://github.com/affaan-m/ECC (MIT, consultado em 15/11/2026).

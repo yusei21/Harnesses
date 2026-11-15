@@ -1,0 +1,44 @@
+{
+  "skill": "pytorch-training-review",
+  "note": "Rubricas de avaliação manual/LLM futura, sem alegar execução end-to-end.",
+  "cases": [
+    {
+      "id": "pytorch-training-review-1",
+      "task": "Treino instavel",
+      "expected": [
+        "gradiente",
+        "loss",
+        "dtype",
+        "NaN"
+      ],
+      "negative": [
+        "aumentar LR sem diagnostico"
+      ]
+    },
+    {
+      "id": "pytorch-training-review-2",
+      "task": "OOM CUDA",
+      "expected": [
+        "perfil memoria",
+        "batch",
+        "acumulacao"
+      ],
+      "negative": [
+        "afirmar benchmark inexistente"
+      ]
+    },
+    {
+      "id": "pytorch-training-review-3",
+      "task": "Diferença treino/inferencia",
+      "expected": [
+        "eval mode",
+        "dropout",
+        "normalizacao",
+        "checkpoint"
+      ],
+      "negative": [
+        "ignorar preprocessing de serving"
+      ]
+    }
+  ]
+}

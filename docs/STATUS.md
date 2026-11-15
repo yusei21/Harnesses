@@ -5,7 +5,7 @@
 | Orquestração Rust + Tokio e ponte Python | Implementado, texto apenas |
 | Provedores OpenAI/Anthropic/Gemini/Ollama | Conectores HTTP existentes; contratos testados com mocks |
 | 7 agentes e guias individuais | Implementado (papéis textuais) |
-| 12 Skills e documentação individual | Implementado (conhecimento) |
+| 21 Skills e documentação individual | Implementado (conhecimento) |
 | Registro de capacidades por domínio | Implementado, JSON + CLI Rust |
 | Seleção de Skill por gatilhos | Implementado, heurística de metadados |
 | Auditoria estrutural/links/duplicatas e docs antigas | Implementado, somente leitura |
@@ -19,3 +19,7 @@
 | Evals de qualidade de LLM e autoevolução | Não implementado |
 
 A execução dos modelos não tem acesso ao filesystem ou a shell; `insights` não altera arquivos. O auditor não deve ser interpretado como teste completo de segurança.
+
+
+## Novos domínios
+Nove Skills adicionadas: três em ML, uma RAG, uma LLM evals, uma SaaS, uma frontend, uma backend e uma security. São procedimentos documentados com rubricas; não executam treino, não indexam dados e não fornecem ferramentas por conta própria.
