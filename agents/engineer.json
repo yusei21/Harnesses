@@ -1,0 +1,25 @@
+{
+  "name": "engineer",
+  "role": "engenharia",
+  "description": "Propõe diffs pequenos e testes; alterações de arquivos reais exigem ferramenta com aprovação.",
+  "triggers": [
+    "implementação",
+    "refatoração",
+    "bug"
+  ],
+  "inputs": [
+    "requisitos",
+    "contexto do código"
+  ],
+  "outputs": [
+    "plano de patch",
+    "testes",
+    "riscos"
+  ],
+  "tools": [
+    "sandboxed filesystem adapter (planned)"
+  ],
+  "delegation": "não",
+  "risk": "write",
+  "docs": "docs/agents/engineer.md"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "researcher",
+  "role": "pesquisa e verificação",
+  "description": "Busca evidências com referências, identifica incerteza e não toma decisões de implementação.",
+  "triggers": [
+    "pesquisa",
+    "documentação",
+    "investigação"
+  ],
+  "inputs": [
+    "pergunta",
+    "fontes autorizadas"
+  ],
+  "outputs": [
+    "evidências",
+    "fontes",
+    "lacunas"
+  ],
+  "tools": [
+    "read-only search adapters"
+  ],
+  "delegation": "não",
+  "risk": "read",
+  "docs": "docs/agents/researcher.md"
+}

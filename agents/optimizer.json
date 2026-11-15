@@ -1,0 +1,27 @@
+{
+  "name": "optimizer",
+  "role": "otimização controlada",
+  "description": "Propõe mudanças versionadas de prompts/Skills/rotas; nunca promove sozinho.",
+  "triggers": [
+    "falhas repetidas",
+    "custo elevado",
+    "evals abaixo do alvo"
+  ],
+  "inputs": [
+    "baseline",
+    "traces",
+    "resultados"
+  ],
+  "outputs": [
+    "proposta",
+    "experimento",
+    "rollback"
+  ],
+  "tools": [
+    "eval runner",
+    "version control adapter (planned)"
+  ],
+  "delegation": "não",
+  "risk": "write",
+  "docs": "docs/agents/optimizer.md"
+}

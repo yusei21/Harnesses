@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "default": "deny",
+  "risk_categories": {
+    "read": {
+      "approval_required": false
+    },
+    "write": {
+      "approval_required": true
+    },
+    "external": {
+      "approval_required": true
+    },
+    "destructive": {
+      "approval_required": true
+    }
+  },
+  "production_note": "Offline policy demonstration, not an authentication service"
+}
