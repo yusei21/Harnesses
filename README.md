@@ -1,56 +1,38 @@
-# Harnesses — Rust-first, Python model adapters
+# Harnesses — Rust-first, Linux local-first, multi-CLI
 
-Harness de engenharia multiagente **local-first**. O núcleo de orquestração está em **Rust**; Python é somente um adaptador de inferência para OpenAI, Anthropic, Gemini e Ollama e permanece disponível para avaliações experimentais.
+Harness de engenharia multiagente local, com núcleo em Rust e Python como ponte de inferência para OpenAI, Anthropic, Gemini e Ollama. Além do pipeline de modelos, o projeto tem um catálogo seletivo de Skills por domínio, auditoria e um `insights` determinístico baseado em eventos.
 
-## Primeiro teste (sem chaves)
+## Início rápido
 ```bash
 python scripts/validate_catalog.py
 python -m unittest discover -s tests -v
 cargo test --manifest-path rust/Cargo.toml --all-targets
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- catalog
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- suggest "auditoria de documentacao"
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- insights examples/observations.json
 ```
 
-## Executar núcleo Rust + modelo Ollama local
-Requisitos: Rust stable, Python 3.11+, Ollama iniciado e modelo já instalado.
+O comando `insights` só lê um arquivo explicitamente fornecido, sem capturar sessões de agentes automaticamente; os dados do exemplo são fictícios.
 
+## Executar modelos via Rust e Python
 ```bash
 ollama pull qwen3
-cargo run --manifest-path rust/Cargo.toml -- run \
-  --provider ollama --model qwen3 \
-  --task "Avalie minha arquitetura"
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-core -- run \
+  --provider ollama --model qwen3 --task "Avalie esta arquitetura"
 ```
+Para mistura de modelos, detalhes em [RUST_CORE.md](docs/RUST_CORE.md) e [PROVIDERS.md](docs/PROVIDERS.md). Cloud exige `--allow-cloud`.
 
-## Orquestração paralela controlada
-```bash
-cargo run --manifest-path rust/Cargo.toml -- run \
-  --provider ollama --model qwen3 \
-  --stages 'planner|researcher,engineer|reviewer' \
-  --max-parallel 2 --max-calls 4 --task "Analise a migração"
-```
-
-## Provedores distintos por agente
-```bash
-export OPENAI_API_KEY="..."
-cargo run --manifest-path rust/Cargo.toml -- run \
-  --provider ollama --model qwen3 \
-  --stages 'planner|engineer|reviewer' \
-  --agent-model reviewer=openai:SEU_MODELO \
-  --allow-cloud --task "Revise uma proposta"
-```
-`--allow-cloud` consente em transmitir objetivo e respostas anteriores para o provedor escolhido. O modelo na nuvem é cobrado conforme sua conta. Não há quota financeira automática.
-
-## Guias
-- [Rust: operação, contratos e CLI](docs/RUST_CORE.md)
-- [Arquitetura e componentes](docs/ARCHITECTURE.md)
+## Documentação
+- [Catálogo de capacidades, seleção, auditoria e insights](docs/CAPABILITIES.md)
+- [Incorporação seletiva dos conceitos do ECC e atribuição](docs/ECC_ADOPTION.md)
+- [Roadmap Linux / multi-CLI / memória local](docs/ROADMAP_LINUX.md)
 - [Agentes](docs/AGENTS.md) e [manuais individuais](docs/agents/)
 - [Skills](docs/SKILLS.md) e [manuais individuais](docs/skills/)
-- [Provedores](docs/PROVIDERS.md)
-- [Segurança](docs/SECURITY.md)
-- [Estado real do sistema](docs/STATUS.md)
-- [Próximas fases](docs/EVOLUTION.md)
-- [Decisões arquiteturais](docs/DECISIONS.md)
-- [Fontes](docs/RESEARCH.md)
+- [Arquitetura e Rust](docs/ARCHITECTURE.md) e [RUST_CORE.md](docs/RUST_CORE.md)
+- [Segurança](docs/SECURITY.md), [status](docs/STATUS.md), [pesquisa](docs/RESEARCH.md)
 
-## Limitações importantes
-O núcleo Rust agenda invocações de modelo em estágios, admite paralelismo de até 3 agentes, valida rotas e orçamentos de chamadas, e falha fechado em ações de risco. Não há execução de shell, acesso a arquivos por agentes, MCP/A2A, aprovação autenticada, memória persistente ou autoevolução. A ponte Python usa subprocesso de **código confiável do repositório**, mas não é um sandbox de segurança. O CLI Python anterior continua disponível para compatibilidade, não é o núcleo recomendado.
+## Escopo real
+Há 7 contratos de agentes e 12 Skills documentadas. O catálogo permite consultar metadados e recomendar Skills por gatilhos; **não** carrega automaticamente o conteúdo das Skills no pipeline LLM, não instala hooks e não concede ferramentas. O auditor atual é estrutural e possui heurísticas limitadas de divergência documental; não é detector semântico completo. Não há MCP/A2A, sandbox para ferramentas, memória RAG, ingestão automática de CLIs ou autoevolução. Essas etapas estão no roadmap.
 
-Licença MIT.
+A arquitetura importa **ideias** do projeto MIT [ECC](https://github.com/affaan-m/ECC), não o conteúdo inteiro nem hooks de terceiros. Uso local por padrão; controle e revisão humana para ações com efeitos colaterais.

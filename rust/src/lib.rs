@@ -2,6 +2,7 @@
 //! No tool execution, MCP or remote A2A is implemented.
 pub mod bridge;
 pub mod core;
+pub mod ops;
 
 pub use bridge::PythonGateway;
 pub use core::{

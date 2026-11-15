@@ -1,25 +1,31 @@
 # Catálogo de Skills
 
-As Skills seguem pastas `skills/<nome>/SKILL.md` e possuem documentação `docs/skills/<nome>.md`. São procedimentos reutilizáveis; não são agentes nem ferramentas que concedem acesso à máquina.
+Skills são procedimentos portáveis, não agentes nem fontes de permissão. O catálogo por domínio é `capabilities/catalog.json` e pode ser consultado sem carregar o conteúdo de todos os SKILL.md.
 
-| Skill | O que oferece | Manual |
+| Domínio | Skill | Manual |
 |---|---|---|
-| `task-decomposition` | Planejamento e critérios de aceite | [Guia](skills/task-decomposition.md) |
-| `evidence-research` | Pesquisa e análise de evidências | [Guia](skills/evidence-research.md) |
-| `code-change` | Patches pequenos, testes e rollback | [Guia](skills/code-change.md) |
-| `security-review` | Threat modeling e revisão de permissões | [Guia](skills/security-review.md) |
-| `eval-design` | Conjuntos de testes e rubricas | [Guia](skills/eval-design.md) |
-| `memory-curation` | Propostas de memória com proveniência | [Guia](skills/memory-curation.md) |
-| `workflow-optimization` | Propostas de experimentos controlados | [Guia](skills/workflow-optimization.md) |
-| `mcp-integration` | Contratos de conectores MCP | [Guia](skills/mcp-integration.md) |
-| `multi-agent-routing` | Critérios para delegação e paralelismo | [Guia](skills/multi-agent-routing.md) |
+| planning | `task-decomposition` | [Manual](skills/task-decomposition.md) |
+| research | `evidence-research` | [Manual](skills/evidence-research.md) |
+| engineering | `code-change` | [Manual](skills/code-change.md) |
+| engineering | `rust-quality-gate` | [Manual](skills/rust-quality-gate.md) |
+| security | `security-review` | [Manual](skills/security-review.md) |
+| quality | `eval-design` | [Manual](skills/eval-design.md) |
+| quality | `consistency-audit` | [Manual](skills/consistency-audit.md) |
+| intelligence | `memory-curation` | [Manual](skills/memory-curation.md) |
+| intelligence | `workflow-optimization` | [Manual](skills/workflow-optimization.md) |
+| intelligence | `insights-triage` | [Manual](skills/insights-triage.md) |
+| integrations | `mcp-integration` | [Manual](skills/mcp-integration.md) |
+| orchestration | `multi-agent-routing` | [Manual](skills/multi-agent-routing.md) |
 
-## Como usar
-1. Examine o catálogo e selecione apenas a Skill pertinente à tarefa.
-2. Em clientes compatíveis com Agent Skills, registre a pasta correspondente e use seu mecanismo de ativação/carregamento progressivo.
-3. Sem cliente compatível, leia manualmente `skills/<nome>/SKILL.md` e siga as orientações.
-4. Edite a Skill e seu manual juntos; valide com `python scripts/validate_catalog.py`.
+## Uso
+```bash
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- catalog
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- suggest "auditoria de docs"
+cargo run --manifest-path rust/Cargo.toml --bin harnesses-ops -- audit
+```
 
-**Atenção:** o comando `python -m harness.cli run` executa agentes, mas **não ativa automaticamente Skills**. Esse carregador sob demanda ainda não foi implementado. O runtime não executa scripts dentro de Skills e não fornece credenciais a essas instruções.
+O comando `suggest` somente retorna candidatos; o Rust não injeta o SKILL.md automaticamente em prompts. Para usar uma Skill no momento, leia `skills/<nome>/SKILL.md` e seu manual, ou instale-a em um CLI compatível após verificar permissões e origem.
 
-Modificar Skills deve ocorrer via PR, com testes e revisão. Não habilite scripts remotos como ferramentas sem verificar origem e permissões.
+Ao adicionar uma nova Skill, crie seu SKILL.md, documentação em `docs/skills/`, entrada no catálogo e testes. Não execute scripts vindos de Skills de terceiros sem avaliação de segurança.
+
+Veja [CAPABILITIES.md](CAPABILITIES.md) e [ECC_ADOPTION.md](ECC_ADOPTION.md).
